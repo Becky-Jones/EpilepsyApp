@@ -1,0 +1,124 @@
+
+#GET http://localhost:4000/movies HTTP/1.1
+
+#Add Movie
+# POST http://localhost:4000/add-movie HTTP/1.1
+# Accept: application/json
+# Content-Type: application/json
+# Content-Length: 225
+
+# {
+#    "title": "Hitman",
+#    "length" : "1:52:49",
+#    "warnings" : [
+#      {
+#        "start_time": "0:02:22",
+#        "end_time": "0:02:54"
+#      },
+#      {
+#        "start_time": "0:06:41",
+#        "end_time": "0:07:04"
+#      }
+#    ]
+# }
+
+
+#Edit movie
+# PUT  http://localhost:4000/edit-movie/61893b99c2417a3202109cd9 HTTP/1.1
+# Accept: application/json
+# Content-Type: application/json
+# Content-Length: 225
+
+# {
+#    "title": "Hitman",
+#    "length" : "1:52:49",
+#    "warnings" : [
+#      {
+#        "start_time": "0:02:22",
+#        "end_time": "0:02:54"
+#      },
+#      {
+#        "start_time": "0:06:41",
+#        "end_time": "0:07:04"
+#      },
+#      {
+#        "start_time": "0:09:42",
+#        "end_time": "0:09:59"
+#      }
+#    ]
+# }
+
+
+#Delete movie
+# DELETE  http://localhost:4000/delete-movie/61894085c6dd21b3a0cf6c10 HTTP/1.1
+# Accept: application/json
+# Content-Type: application/json
+
+
+
+
+
+#Add Patient
+# POST http://localhost:4000/add-user HTTP/1.1
+# Accept: application/json
+# Content-Type: application/json
+
+# {
+#     "first_name":"Barry",
+#     "surname":"Manilow",
+#     "telephone": "07841445495",
+#     "date_of_birth":"25/10/1989",
+#     "gender":"female",
+#     "email":"neal19@berge.com",
+#     "password":"UIEInM",
+#     "address1":"9755 Mill Road",
+#     "address2":"HUDDERSFIELD",
+#     "postcode":"HD87 2OC",
+#     "user_type":"Patient",
+#     "patient_details": {
+#         "seizure_type":[
+#             "Absence Seizure"
+#         ],
+#         "years_suffered":4,
+#         "seizure_triggers":[
+#             "lack of sleep"
+#         ],
+#         "seizure_monthly_frequency":1,
+#         "mental_health_issues":["Anxiety"]
+#     }
+# }
+
+#Edit user (first_name and seizure_triggers)
+# PUT  http://localhost:4000/edit-user/61895774a39171de99fc9c8c HTTP/1.1
+# Accept: application/json
+# Content-Type: application/json
+
+# {
+#     "first_name":"BadBarry",
+#     "surname":"Manilow",
+#     "date_of_birth":"25/10/1989",
+#     "gender":"female",
+#     "email":"neal19@berge.com",
+#     "password":"UIEInM",
+#     "address1":"9755 Mill Road",
+#     "address2":"HUDDERSFIELD",
+#     "postcode":"HD87 2OC",
+#     "user_type":"Patient",
+#     "patient_details": {
+#         "seizure_type":[
+#             "Absence Seizure"
+#         ],
+#         "years_suffered":4,
+#         "seizure_triggers":[
+#             "lack of sleep",
+#             "stimulants"
+#         ],
+#         "seizure_monthly_frequency":1,
+#         "mental_health_issues":["Anxiety"]
+#     }
+# }
+
+#Delete user
+# DELETE  http://localhost:4000/delete-user/61895774a39171de99fc9c8c HTTP/1.1
+# Accept: application/json
+# Content-Type: application/json
