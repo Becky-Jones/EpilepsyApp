@@ -1,0 +1,7 @@
+{
+    "env": {
+        "MONGO_USER": "wcfbReadWrite",
+        "MONGO_PASSWORD": "mongoletmein",
+        "MONGO_DB": "willcodeforbeer"
+    }
+}
