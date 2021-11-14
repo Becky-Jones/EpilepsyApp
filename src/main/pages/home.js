@@ -50,6 +50,11 @@ export default function Home({ navigation }) {
                 title="Go to Create Patient"
                 onPress={() => navigation.navigate("Create Patient")} 
             />
+                        <Button
+                stlye={styles.btn}
+                title="Go to Create Admin"
+                onPress={() => navigation.navigate("Create Practitioner")} 
+            />
         </View>
         <View style={styles.container}>
             <Text style={homeStyle.title}>Patients</Text>
