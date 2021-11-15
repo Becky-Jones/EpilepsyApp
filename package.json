@@ -7,6 +7,7 @@
     "start": "concurrently \"tsc -w\" \"nodemon dist/js/app.js\" \"expo start\""
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^3.5.2",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "@unimodules/core": "^1.0.0",
@@ -22,7 +23,11 @@
     "react-dom": "16.13.1",
     "react-freeze": "^1.0.0",
     "react-native": "~0.64.2",
+    "react-native-datepicker": "^1.7.2",
+    "react-native-dropdown-picker": "^5.2.3",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-material-dropdown": "^0.11.1",
+    "react-native-neat-date-picker": "^1.1.2",
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "~3.8.0",
