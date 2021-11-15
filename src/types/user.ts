@@ -19,5 +19,6 @@ export interface IPatientDetails extends Document {
     years_suffered: number,
     seizure_triggers: [string],
     seizure_monthly_frequency: number,
-    mental_health_issues: [string]
+    mental_health_issues: [string],
+    practitioner_id: string
 }

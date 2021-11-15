@@ -1,5 +1,8 @@
-
+#Simple Get
 #GET http://localhost:4000/movies HTTP/1.1
+
+##Get a practitioners patients
+#GET http://localhost:4000/my-patients/619257063e933ddf5443cb5d HTTP/1.1
 
 #Add Movie
 # POST http://localhost:4000/add-movie HTTP/1.1
@@ -84,7 +87,8 @@
 #             "lack of sleep"
 #         ],
 #         "seizure_monthly_frequency":1,
-#         "mental_health_issues":["Anxiety"]
+#         "mental_health_issues":["Anxiety"],
+#         "practitioner_id":"619257063e933ddf5443cb5d"
 #     }
 # }
 
@@ -114,7 +118,8 @@
 #             "stimulants"
 #         ],
 #         "seizure_monthly_frequency":1,
-#         "mental_health_issues":["Anxiety"]
+#         "mental_health_issues":["Anxiety"],
+#         "practitioner_id":"619257063e933ddf5443cb5d"
 #     }
 # }
 
