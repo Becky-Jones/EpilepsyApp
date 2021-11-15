@@ -1,52 +1,71 @@
 import React, { useState } from "react";
-import {
-  Text,
-  TextInput,
-  Button,
-  View,
-} from "react-native";
-
+import { Text, TextInput, Button, View } from "react-native";
+import DatePicker from "react-native-datepicker";
 import { ScrollView } from "react-native-gesture-handler";
 const commonstyles = require("./stylesheets/styles");
+var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+inputsValid = () => {
+  if (S_Password != S_CPassword) {
+    // Error, passwords don't match
+    alert("Validation Error - Passwords don't match!");
+    return false;
+  }
+
+  if (format.test(first_name) || format.test(surname)) {
+    // Error, name can't contain special character
+    alert(
+      "Validation Error - First and Surname can't contain special characters!"
+    );
+    return false;
+  }
+  return true;
+};
 
 export default function createAdmin({ navigation }) {
+  const [date, setDate] = useState("15-11-2021");
 
-      const [S_FName, setFName] = useState('');
-      const [S_LName, setLName] = useState('');
-      const [S_Gender, setGender] = useState('');
-      const [S_DOB, setDOB] = useState('');
-      const [S_Email, setEmail] = useState('');
-      const [S_Password, setPassword] = useState('');
-      const [S_City, setCity] = useState();
-      const [S_Address, setAddress] = useState('');
-      const [S_Postcode, setPostcode] = useState('');
+  const [S_FName, setFName] = useState("");
+  const [S_LName, setLName] = useState("");
+  const [S_Gender, setGender] = useState("");
+  const [S_Email, setEmail] = useState("");
+  const [S_Password, setPassword] = useState("");
+  const [S_CPassword, setCPassword] = useState("");
+  const [S_City, setCity] = useState();
+  const [S_Address, setAddress] = useState("");
+  const [S_Postcode, setPostcode] = useState("");
 
-    const InsertData = () => {
-        fetch("http://192.168.0.7:4000/add-user", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            first_name: S_FName,
-            surname: S_LName,
-            date_of_birth: S_DOB,
-            gender: S_Gender,
-            email: S_Email,
-            password: S_Password,
-            address1: S_Address,
-            address2: S_City,
-            postcode: S_Postcode,
-            user_type: "Admin",
-          }),
-        }).then((response) => {
-            console.log("Admin created successfully");
-            navigation.navigate("Home")
-        }).catch(error => {
-            console.log(error);
+  const InsertData = () => {
+    if (inputsValid) {
+      fetch("http://192.168.170.140:4000/add-user", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          first_name: S_FName,
+          surname: S_LName,
+          date_of_birth: date,
+          gender: S_Gender,
+          email: S_Email,
+          password: S_Password,
+          address1: S_Address,
+          address2: S_City,
+          postcode: S_Postcode,
+          user_type: "Admin",
+        }),
+      })
+        .then((response) => {
+          console.log("Admin created successfully");
+          alert("Admin created Successfully");
+          navigation.navigate("Home");
         })
+        .catch((error) => {
+          console.log(error);
+        });
     }
+  };
   return (
     <ScrollView>
       <Text style={commonstyles.text}>Practitioner Details:</Text>
@@ -75,25 +94,49 @@ export default function createAdmin({ navigation }) {
       <View style={commonstyles.inlineInput}>
         <View style={{ flex: 4 }}>
           <TextInput
-            style={commonstyles.smallinput}
-            placeholder="Date of birth"
+            style={commonstyles.input}
+            placeholder="Date of Birth:"
             autoCapitalize="none"
             placeholderTextColor="white"
-            value={S_DOB}
-            onChangeText={(text) => setDOB(text)}
           />
         </View>
         <View style={{ flex: 4 }}>
-          <TextInput
-            style={commonstyles.smallinput}
-            placeholder="Gender"
-            autoCapitalize="none"
-            placeholderTextColor="white"
-            value={S_Gender}
-            onChangeText={(text) => setGender(text)}
+          <DatePicker
+            style={styles.datePickerStyle}
+            date={date} // Initial date from state
+            mode="date" // The enum of date, datetime and time
+            placeholder="select date"
+            format="DD-MM-YYYY"
+            minDate="01-01-1921"
+            maxDate="01-01-2022"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                //display: 'none',
+                position: "absolute",
+                left: 0,
+                top: 4,
+                marginLeft: 0,
+              },
+              dateInput: {
+                marginLeft: 35,
+              },
+            }}
+            onDateChange={(date) => {
+              setDate(date);
+            }}
           />
         </View>
       </View>
+      <TextInput
+        style={commonstyles.smallinput}
+        placeholder="Gender"
+        autoCapitalize="none"
+        placeholderTextColor="white"
+        value={S_Gender}
+        onChangeText={(text) => setGender(text)}
+      />
       <TextInput
         style={commonstyles.smallinput}
         placeholder="Postcode"
@@ -136,11 +179,16 @@ export default function createAdmin({ navigation }) {
         value={S_Password}
         onChangeText={(text) => setPassword(text)}
       />
-      <Button
-        style={{ flex: 4 }}
-        title="Create Admin"
-        onPress={InsertData}
+      <TextInput
+        style={commonstyles.smallinput}
+        placeholder="Confirm Password"
+        secureTextEntry={true}
+        autoCapitalize="none"
+        placeholderTextColor="white"
+        value={S_CPassword}
+        onChangeText={(text) => setCPassword(text)}
       />
+      <Button style={{ flex: 4 }} title="Create Admin" onPress={InsertData} />
     </ScrollView>
   );
 }
