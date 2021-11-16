@@ -42,8 +42,12 @@ const getAdmins = async (req: Request, res: Response): Promise<void> => {
 
 const getUser = async (req: Request, res: Response): Promise<void> => {
     try {
-        const body = req.body as Pick<IUser, "email">
-        const user: IUser[] = await User.find({ email: body.email })
+      const {
+        params: { email },
+        body,
+      } = req
+
+        const user: IUser[] = await User.find({ email: email })
         res.status(200).json({ user })
     } catch (error) {
         throw error
