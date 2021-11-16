@@ -1,10 +1,11 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "index.js",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "start": "concurrently \"tsc -w\" \"nodemon dist/js/app.js\" \"expo start\""
+    "build": "tsc --watch & nodemon -w dist/js/App.js",
+    "start": "concurrently \"tsc -w\" \"nodemon dist/js/App.js\" \"expo start\""
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^3.5.2",
@@ -50,7 +51,7 @@
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
     "concurrently": "^6.3.0",
-    "nodemon": "^2.0.14"
+    "nodemon": "^2.0.15"
   },
   "private": true
 }
