@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import LoginScreen from './src/main/pages/login.js'
+import CreateAdmin from './src/main/pages/createAdmin.js'
 import SignupScreen from './src/main/pages/createPatient.js'
 import Home from './src/main/pages/home.js'
 import PatientDetails from './src/main/pages/patientDetails.js'
@@ -9,16 +10,20 @@ import MediaDetails from './src/main/pages/mediaDetails.js'
 import AllMedia from './src/main/pages/allMedia.js'
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { AsyncStorage } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  AsyncStorage.clear();
+
   return (
 
   <NavigationContainer>
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Create Patient" component={SignupScreen} />
+      <Stack.Screen name="Create Practitioner" component={CreateAdmin} />
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Patient Details" component={PatientDetails} />
       <Stack.Screen name="Media Details" component={MediaDetails} />

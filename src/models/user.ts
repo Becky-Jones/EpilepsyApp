@@ -19,6 +19,9 @@ const patientSchema: Schema = new Schema({
     mental_health_issues: {
         type: Array, 
         "default" : [],
+    },
+    practitioner_id: {
+        type: String
     }
 })
 

@@ -1,6 +1,6 @@
 import { Router } from "express"
 import { getMovies, addMovie, updateMovie, deleteMovie } from "../controllers/movie"
-import { getPatients, getAdmins, getUser, addUser, updateUser, deleteUser } from "../controllers/user"
+import { getPatients, getAdmins, getUser, addUser, updateUser, deleteUser, getMyPatients } from "../controllers/user"
 
 const router: Router = Router()
 
@@ -15,6 +15,10 @@ router.delete("/delete-movie/:id", deleteMovie)
 
 // Users
 router.get("/patients", getPatients)
+
+router.get("/user/:email", getUser)
+
+router.get("/my-patients/:id", getMyPatients)
 
 router.get("/admins", getAdmins)
 

@@ -11,6 +11,26 @@ const getPatients = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
+const getMyPatients = async (req: Request, res: Response): Promise<void> => {
+  try {
+      const {
+        params: { id },
+        body,
+      } = req
+      const adminId = id
+      const patients: IUser[] = await User.find({ user_type: "Patient" })
+      const myPatients: IUser[] = []
+      for (let i = 0; i < patients.length; i++) {
+        if (patients[i].patient_details?.practitioner_id == adminId) {
+          myPatients.push(patients[i])
+        }
+      }
+      res.status(200).json({ myPatients })
+  } catch (error) {
+      throw error
+  }
+}
+
 const getAdmins = async (req: Request, res: Response): Promise<void> => {
     try {
         const admins: IUser[] = await User.find({ user_type: "Admin"})
@@ -22,8 +42,12 @@ const getAdmins = async (req: Request, res: Response): Promise<void> => {
 
 const getUser = async (req: Request, res: Response): Promise<void> => {
     try {
-        const body = req.body as Pick<IUser, "email">
-        const user: IUser[] = await User.find({ email: body.email })
+      const {
+        params: { email },
+        body,
+      } = req
+
+        const user: IUser[] = await User.find({ email: email })
         res.status(200).json({ user })
     } catch (error) {
         throw error
@@ -101,4 +125,4 @@ const deleteUser = async (req: Request, res: Response): Promise<void> => {
     }
   }
   
-export { getPatients, getAdmins, getUser, addUser, updateUser, deleteUser }
+export { getPatients, getMyPatients, getAdmins, getUser, addUser, updateUser, deleteUser }
