@@ -102,7 +102,7 @@ export default function createAdmin({ navigation }) {
         </View>
         <View style={{ flex: 4 }}>
           <DatePicker
-            style={styles.datePickerStyle}
+            style={commonstyles.datePickerStyle}
             date={date} // Initial date from state
             mode="date" // The enum of date, datetime and time
             placeholder="select date"

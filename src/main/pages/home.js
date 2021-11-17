@@ -8,6 +8,13 @@ import { AsyncStorage } from "react-native";
 
 const styles = require("./stylesheets/styles");
 const homeStyle = require("./stylesheets/homeStyle");
+
+/************************
+ *
+ * Columns for tables
+ *
+ *************************/
+
 const columns = [
   {
     title: "Name",
@@ -15,13 +22,14 @@ const columns = [
     width: 105,
   },
   {
-    title: "DOB",
-    dataIndex: "dob",
+    title: "date of birth",
+    dataIndex: "DOB",
     width: 105,
   },
   {
     title: "Link",
-    dataIndex: "link",
+    dataIndex: "Link",
+    width: 105,
   },
 ];
 
@@ -34,19 +42,13 @@ const personalDetailsCol = [
   { title: "", dataIndex: "value", width: 150 },
 ];
 
-// _retrieveData = async () => {
-//   try {
-//     const value = await AsyncStorage.getItem('first_name');
-//     if (value !== null) {
-//       // We have data!!
-//       console.log("NAME: " + value);
-//     }
-//   } catch (error) {
-//     // Error retrieving data
-//   }
-// };
-
+/************************
+ * Home Function
+ *************************/
 export default function Home({ navigation }) {
+  /************************
+   * Use state variables
+   *************************/
   const [id, setId] = useState("");
   const [first_name, setFName] = useState("");
   const [surname, setSName] = useState("");
@@ -64,14 +66,17 @@ export default function Home({ navigation }) {
   const [yearsSuffered, setYearsSuffered] = useState("");
   const [seizureFreq, setSeizureFreq] = useState("");
   const [mentalHealthIssues, setMHIssues] = useState("");
-  const [practitionerId, setPractitionerId] = useState(""); 
+  const [practitionerId, setPractitionerId] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [patientData, setPatientData] = useState([]);
 
-  
+
+  /************************
+   * Fetch the users personal data and populate the use state variables
+   *************************/
   const getData = async () => {
     const testData = new Map();
     try {
-      // var value = await AsyncStorage.getItem("user_id");
       const keys = [
         "user_id",
         "first_name",
@@ -88,15 +93,15 @@ export default function Home({ navigation }) {
         "seizure_monthly_frequency",
         "practitioner_id",
         "mental_health_issues",
-        "seizure_triggers"
+        "seizure_triggers",
       ];
 
-      var isLoggedIn = await AsyncStorage.getItem("user_id").then(res => {
-      }).catch(error => {
-        navigation.navigate("Login");
+      var isLoggedIn = await AsyncStorage.getItem("user_id")
+        .then((res) => {})
+        .catch((error) => {
+          navigation.navigate("Login");
+        });
 
-      });
-      
       await AsyncStorage.multiGet(keys, (err, stores) => {
         stores.map((result, i, store) => {
           // get at each store's key/value so you can work with it
@@ -105,13 +110,9 @@ export default function Home({ navigation }) {
           testData.set(key, value);
         });
       });
-      // if (value !== null) {
-      //   // value previously stored
-      // }
     } catch (e) {
       // error reading value
     }
-    // source[0]= "test";
     return testData;
   };
 
@@ -127,7 +128,7 @@ export default function Home({ navigation }) {
     setCity(res.get("city"));
     setPostcode(res.get("postcode"));
 
-    if ('Patient' == type) {
+    if ("Patient" == type) {
       setSeizureType(res.get("seizure_type"));
       setYearsSuffered(res.get("years_suffered"));
       setSeizureTriggers(res.get("seizure_triggers"));
@@ -139,8 +140,11 @@ export default function Home({ navigation }) {
       setIsAdmin(true);
     }
   });
-
   testing;
+
+  /************************
+   * Set the data source for the personal details table
+   *************************/
   const personalDetails = [
     {
       field: "Name",
@@ -172,36 +176,80 @@ export default function Home({ navigation }) {
     },
   ];
 
+  const patientDetailsArray = [];
+
   if (!isAdmin) {
-    personalDetails.push({field: "Seizure Type(s)", value: seizureType});
-    personalDetails.push({field: "Years Suffered", value: yearsSuffered});
-    personalDetails.push({field: "Seizure Trigger(s)", value: seizureTriggers});
-    personalDetails.push({field: "Seizure Frequency", value: seizureFreq});
-    personalDetails.push({field: "Mental Health Issue(s)", value: mentalHealthIssues});
+    personalDetails.push({ field: "Seizure Type(s)", value: seizureType });
+    personalDetails.push({ field: "Years Suffered", value: yearsSuffered });
+    personalDetails.push({
+      field: "Seizure Trigger(s)",
+      value: seizureTriggers,
+    });
+    personalDetails.push({ field: "Seizure Frequency", value: seizureFreq });
+    personalDetails.push({
+      field: "Mental Health Issue(s)",
+      value: mentalHealthIssues,
+    });
   }
 
-  const dataSource = [
-    // {
-    //   name: "Matt Dryhurst",
-    //   dob: "20/04/2000",
-    //   link: (
-    //     <Button
-    //       title="View Patient Details"
-    //       onPress={() => navigation.navigate("Patient Details")}
-    //     />
-    //   ),
-    // },
-    // {
-    //   name: "Graham Daniels",
-    //   dob: "27/02/1977",
-    //   link: "View Patient Page",
-    // },
-  ];
-  return (
-    <>
-      <ScrollView>
-        <View style={homeStyle.container}>
-          <Text style={homeStyle.header}>Home Screen</Text>
+  /************************
+   * Set the data source for the admins patients table
+   *************************/
+  if (isAdmin) {
+    // testing.then();
+    var url = "http://192.168.0.7:4000/my-patients/" + id;
+    // console.log(url);
+    // url;
+    fetch(url, {
+      method: "GET",
+    })
+      .then((response) => response.text())
+      .then((data) => {
+        var json = JSON.parse(data);
+        const myArray = json.myPatients;
+        for (var i = 0; i < myArray.length; i++) {
+          user_email = myArray[i].email;
+          patientDetailsArray.push({
+            email: user_email,
+            name: myArray[i].first_name + " " + myArray[i].surname,
+            DOB: myArray[i].date_of_birth,
+            Link: (
+              <Button
+                title="View"
+                onPress={() => {
+                  // AsyncStorage.setItem("patientEmail", email).then(
+                  navigation.navigate("Patient Details");
+                }}
+              />
+            ),
+          });
+        }
+        setPatientData(patientDetailsArray);
+      });
+  }
+
+  for (var i = 0; i < patientDetailsArray.length; i++) {
+    console.log(
+      "Array element " + i + ": " + JSON.stringify(patientDetailsArray[i])
+    );
+  }
+  var customHeight;
+
+  if (isAdmin) {
+    customHeight = 250;
+  } else {
+    customHeight = 500;
+  }
+
+  /************************
+   *
+   * Returned Views
+   *
+   *************************/
+  loadAdminView = () => {
+    if (isAdmin) {
+      return (
+        <View style={styles.container}>
           <Button
             stlye={styles.btn}
             title="Go to Create Patient"
@@ -212,29 +260,38 @@ export default function Home({ navigation }) {
             title="Go to Create Admin"
             onPress={() => navigation.navigate("Create Practitioner")}
           />
+          <Text style={homeStyle.title}>Patients: </Text>
+          <View style={homeStyle.table}>
+            <Table
+              height={500}
+              columnWidth={150}
+              columns={columns}
+              dataSource={patientData}
+            />
+          </View>
+        </View>
+      );
+    }
+  };
+
+  return (
+    <>
+      <ScrollView>
+        <View style={homeStyle.container}>
+          <Text style={homeStyle.header}>Home Screen</Text>
         </View>
         <View style={styles.container}>
           <Text style={homeStyle.title}>Personal Details:</Text>
           <View style={homeStyle.table}>
             <Table
-              height={400}
+              height={customHeight}
               columnWidth={150}
               columns={personalDetailsCol}
               dataSource={personalDetails}
             />
           </View>
         </View>
-        <View style={styles.container}>
-          <Text style={homeStyle.title}>Patients</Text>
-          <View style={homeStyle.table}>
-            <Table
-              height={420}
-              columnWidth={150}
-              columns={columns}
-              dataSource={dataSource}
-            />
-          </View>
-        </View>
+        {loadAdminView()}
       </ScrollView>
     </>
   );

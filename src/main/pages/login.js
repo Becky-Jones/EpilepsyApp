@@ -37,7 +37,7 @@ function LoginScreen({ navigation }) {
           console.log("User Successfully logged in");
           console.log(user);
 
-          AsyncStorage.setItem("user_id", user.id);
+          AsyncStorage.setItem("user_id", user._id);
           AsyncStorage.setItem("first_name", user.first_name);
           AsyncStorage.setItem("surname", user.surname);
           AsyncStorage.setItem("email", user.email);
