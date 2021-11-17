@@ -12,6 +12,8 @@ import {
 const commonstyles = require("./stylesheets/loginStyles");
 
 function LoginScreen({ navigation }) {
+  // static clear([callback]: ?(error: ?Error) => void)// - ON LOGOUT THIS NEEDS TO BE CALLED
+  AsyncStorage.clear();
   const [S_Email, setEmail] = useState("");
   const [S_Password, setPassword] = useState("");
 
@@ -28,11 +30,34 @@ function LoginScreen({ navigation }) {
           alert("Invalid email or password, please try again");
           return;
         }
-        console.log("checking password " + S_Password + " Against db " + json.user[0].password);
-        if (json.user[0].password == S_Password) {
+        const user = json.user[0];
+
+        console.log("checking password " + S_Password + " Against db " + user.password);
+        if (user.password == S_Password) {
           console.log("User Successfully logged in");
-          console.log(json.user[0]._id);
-          AsyncStorage.setItem("user_id", json.user[0]._id);
+          console.log(user);
+
+          AsyncStorage.setItem("user_id", user.id);
+          AsyncStorage.setItem("first_name", user.first_name);
+          AsyncStorage.setItem("surname", user.surname);
+          AsyncStorage.setItem("email", user.email);
+          AsyncStorage.setItem("user_type", user.user_type);
+          AsyncStorage.setItem("DOB", user.date_of_birth);
+          AsyncStorage.setItem("gender", user.gender);
+          AsyncStorage.setItem("address", user.address1);
+          AsyncStorage.setItem("city", user.address2);
+          AsyncStorage.setItem("postcode", user.postcode);
+
+          if(user.user_type == "Patient"){
+            const details = user.patient_details;
+            
+            AsyncStorage.setItem("seizure_type", details.seizure_type.toString());
+            AsyncStorage.setItem("years_suffered", JSON.stringify(details.years_suffered));
+            AsyncStorage.setItem("seizure_triggers", details.seizure_triggers.toString());
+            AsyncStorage.setItem("seizure_monthly_frequency", JSON.stringify(details.seizure_monthly_frequency));
+            AsyncStorage.setItem("mental_health_issues", details.mental_health_issues.toString());
+            AsyncStorage.setItem("practitioner_id", details.practitioner_id);
+          }
           navigation.navigate("Home");
         } else {
           alert("Invalid email or password, please try again");
