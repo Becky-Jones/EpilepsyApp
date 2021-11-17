@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import uuid from "react-native-uuid";
 import { StyleSheet, Text, TextInput, Button, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import Table from "react-native-simple-table";
+import Table from 'react-native-simple-table';
+import displayNav from "../components/NavBar";
 import { AsyncStorage } from "react-native";
 
 const styles = require("./stylesheets/styles");
@@ -296,3 +297,4 @@ export default function Home({ navigation }) {
     </>
   );
 }
+
