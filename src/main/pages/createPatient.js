@@ -124,7 +124,7 @@ export default function createPatient({ navigation }) {
             seizure_triggers: triggersArray,
             seizure_monthly_frequency: S_MonthlyFreq,
             mental_health_issues: MHArray,
-            practitioner_id: value
+            practitioner_id: value,
           },
         }),
       })
@@ -138,24 +138,32 @@ export default function createPatient({ navigation }) {
         });
     }
   };
+  var cache = {}
 
   var practitioners = [];
+  var url = "http://192.168.0.7:4000/admins";
 
-  fetch("http://192.168.0.7:4000/admins", {
-    method: "GET",
-  })
-    .then((response) => response.text())
-    .then((data) => {
-      var json = JSON.parse(data);
-      for (var i = 0; i < json.admins.length; i++) {
-        var name = json.admins[i].first_name + " " + json.admins[i].surname;
-        practitioners.push({ label: name, value: json.admins[i]._id });
-        console.log("ADMIN: " + json.admins[i]._id);
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  if (cache[url]) {
+    callback(cache[url]);
+    return;
+  } else {
+    fetch(url)
+      .then((r) => r.text())
+      .then(function (data) {
+        cache[url] = data;
+        callback(data);
+        var json = JSON.parse(data);
+        for (var i = 0; i < json.admins.length; i++) {
+          var name = json.admins[i].first_name + " " + json.admins[i].surname;
+          practitioners.push({ label: name, value: json.admins[i]._id });
+          console.log("ADMIN: " + json.admins[i]._id);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState(practitioners);
@@ -302,7 +310,7 @@ export default function createPatient({ navigation }) {
             color: "white",
             width: 300,
             alignItems: "center",
-            marginLeft: 30
+            marginLeft: 30,
           }}
         />
       </View>

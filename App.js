@@ -9,12 +9,10 @@ import PatientDetails from './src/main/pages/patientDetails.js'
 import MediaDetails from './src/main/pages/mediaDetails.js'
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { AsyncStorage } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  AsyncStorage.clear();
 
   return (
 
@@ -30,7 +28,6 @@ export default function App() {
   </NavigationContainer>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {

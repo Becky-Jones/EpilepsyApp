@@ -4,7 +4,6 @@ import uuid from "react-native-uuid";
 import { StyleSheet, Text, TextInput, Button, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Table from "react-native-simple-table";
-import { AsyncStorage } from "react-native";
 
 //pull in common stylesheet and stylesheet for this page
 const styles = require("./stylesheets/styles");
