@@ -5,6 +5,7 @@ import { StyleSheet, Text, TextInput, Button, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Table from "react-native-simple-table";
 
+
 //pull in common stylesheet and stylesheet for this page
 const styles = require("./stylesheets/styles");
 const patientDetailsStyle = require("./stylesheets/patientDetailsStyle");
@@ -81,23 +82,6 @@ export default function PatientDetail({ navigation }) {
   //Media Table Setup
   const { columnsMediaTable, dataSourceMediaTable } = setupMediaTable();
 
-  //Create header
-  const header = (
-    <View style={patientDetailsStyle.container}>
-      <Text style={patientDetailsStyle.header}>Patient Details</Text>
-      <Button
-        stlye={styles.btn}
-        title="Go to Create Patient"
-        onPress={() => navigation.navigate("Create Patient")}
-      />
-      <Button
-        stlye={styles.btn}
-        title="Go to Home"
-        onPress={() => navigation.navigate("Home")}
-      />
-    </View>
-  );
-
   //Create patient details
   const patientDetail = (
     <View style={styles.container}>
@@ -132,7 +116,7 @@ export default function PatientDetail({ navigation }) {
   return (
     <>
     <ScrollView>
-      {header}
+      {displayNav(navigation)}
       {patientDetail}
       {mediaList}
       </ScrollView>
