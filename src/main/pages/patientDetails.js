@@ -1,6 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import uuid from "react-native-uuid";
 import { StyleSheet, Text, TextInput, Button, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Table from "react-native-simple-table";
@@ -10,74 +9,13 @@ import Table from "react-native-simple-table";
 const styles = require("./stylesheets/styles");
 const patientDetailsStyle = require("./stylesheets/patientDetailsStyle");
 
-export default function PatientDetail({ navigation }) {
-  const [id, setId] = useState("");
-  const [first_name, setFName] = useState("");
-  const [surname, setSName] = useState("");
-  const [email, setEmail] = useState("");
-  const [type, setType] = useState("");
-  const [DOB, setDOB] = useState("");
-  const [gender, setGender] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [postcode, setPostcode] = useState("");
-
-  // Patient Details
-  const [seizureType, setSeizureType] = useState("");
-  const [seizureTriggers, setSeizureTriggers] = useState("");
-  const [yearsSuffered, setYearsSuffered] = useState("");
-  const [seizureFreq, setSeizureFreq] = useState("");
-  const [mentalHealthIssues, setMHIssues] = useState("");
-  const [practitionerId, setPractitionerId] = useState("");
-
-  // const getData = async () => {
-  //   await AsyncStorage.getItem("patientEmail")
-  //   .then((res) => {
-  //     setEmail(res.get("patientEmail"));
-  //     var url = "http://192.168.0.7:4000/user/" + email;
-  //     fetch(url, {
-  //       method: "GET",
-  //     })
-  //       .then((response) => response.text())
-  //       .then((data) => {
-  //         var json = JSON.parse(data);
-  //         if (json.user.length == 0) {
-  //           return;
-  //         }
-  //         const user = json.user[0];
-  //         console.log("USER RECEIVED: " + user);
-  //         setId(user._id);
-  //         setFName(user.first_name);
-  //         setSName(user.surname);
-  //         setType(user.user_type);
-  //         setDOB(ser.date_of_birth);
-  //         setGender(user.gender);
-  //         setAddress(user.address1);
-  //         setCity(user.address2);
-  //         setPostcode(user.postcode);
-
-  //         const details = user.patient_details;
-
-  //         setSeizureType(details.seizure_type.toString());
-  //         setYearsSuffered(JSON.stringify(details.years_suffered));
-  //         setSeizureTriggers(details.seizure_triggers.toString());
-  //         setSeizureFreq(JSON.stringify(details.seizure_monthly_frequency));
-  //         setMHIssues(details.mental_health_issues.toString());
-  //         setPractitionerId(details.practitioner_id);
-  //       })
-  //       .catch((error) => {
-  //         alert("An error occurred, please try again");
-  //         console.error(error);
-  //       });
-  //   })
-  //   .catch((error) => {});
-  // }
-
-  // getData();
-  // TODO - get patient details for that id and display on page
+export default function PatientDetail({ route, navigation }) {
+  const params = route.params;
+  const patient = params.patient;
 
   //Patient Table Setup
-  const { columnsPatientTable, dataSourcePatientTable } = setupPatientTable();
+  const { columnsPatientTable, dataSourcePatientTable } =
+    setupPatientTable(patient);
 
   //Media Table Setup
   const { columnsMediaTable, dataSourceMediaTable } = setupMediaTable();
@@ -197,7 +135,8 @@ export default function PatientDetail({ navigation }) {
     return { columnsMediaTable, dataSourceMediaTable };
   }
 
-  function setupPatientTable() {
+  function setupPatientTable(patientEmail) {
+    const dataSourcePatientTable = [];
     //Creating columns for Patient Table
     const columnsPatientTable = [
       {
@@ -211,22 +150,55 @@ export default function PatientDetail({ navigation }) {
         width: 105,
       },
     ];
-    //Values for Patient table are hardcoded for now. Will be populated after reading from database
-    const dataSourcePatientTable = [
-      { key: "First Name", value: first_name },
-      { key: "Last Name", value: surname },
-      { key: "Gender", value: gender },
-      { key: "Date of Birth", value: DOB },
-      { key: "Address", value: address },
-      { key: "City", value: city },
-      { key: "Postcode", value: postcode },
-      { key: "Email", value: email },
-      { key: "Seizure Types(s)", value: seizureType },
-      { key: "Seizure Trigger(s)", value: seizureTriggers },
-      { key: "Year(s) suffered)", value: yearsSuffered },
-      { key: "Seizure freq", value: seizureFreq },
-      { key: "Mental Health Impact", value: mentalHealthIssues },
-    ];
-    return { columnsPatientTable, dataSourcePatientTable };
+    //Values for Patient table
+    var url = "http://10.50.11.66:4000/user/" + patientEmail;
+    url;
+    fetch(url, {
+      method: "GET",
+    })
+      .then((response) => response.text())
+      .then((data) => {
+        var json = JSON.parse(data);
+
+        const user = json.user[0];
+
+        const details = user.patient_details;
+        dataSourcePatientTable.push({
+          key: "First Name",
+          value: user.first_name,
+        });
+        dataSourcePatientTable.push({ key: "Last Name", value: user.surname });
+        dataSourcePatientTable.push({ key: "Gender", value: user.gender });
+        dataSourcePatientTable.push({
+          key: "Date of Birth",
+          value: user.date_of_birth,
+        });
+        dataSourcePatientTable.push({ key: "Email", value: user.email });
+        dataSourcePatientTable.push({ key: "Address", value: user.address1 });
+        dataSourcePatientTable.push({ key: "City", value: user.address2 });
+        dataSourcePatientTable.push({ key: "Postcode", value: user.postcode });
+        dataSourcePatientTable.push({
+          key: "Seizure Type(s)",
+          value: details.seizure_type,
+        });
+        dataSourcePatientTable.push({
+          key: "Seizure Trigger(s)",
+          value: details.seizure_triggers,
+        });
+        dataSourcePatientTable.push({
+          key: "Seizure Frequency(s)",
+          value: details.seizure_monthly_frequency,
+        });
+        dataSourcePatientTable.push({
+          key: "Mental Health impact",
+          value: details.mental_health_issues,
+        });
+        return { columnsPatientTable, dataSourcePatientTable };
+      })
+      .catch((error) => {
+        alert("An error occurred, please try again");
+        console.error(error);
+      });
+    // return { columnsPatientTable, dataSourcePatientTable };
   }
 }

@@ -217,8 +217,6 @@ export default function createPatient({ navigation }) {
             mode="date" // The enum of date, datetime and time
             placeholder="select date"
             format="DD-MM-YYYY"
-            minDate="01-01-1921"
-            maxDate="01-01-2022"
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
             customStyles={{
