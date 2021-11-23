@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { AsyncStorage } from 'react-native';
+import { Patient } from "../components/Patient";
+import { Admin } from "../components/Admin";
 
-import {
-  Text,
-  TouchableOpacity,
-  TextInput,
-  View,
-} from "react-native";
+import { Text, TouchableOpacity, TextInput, View } from "react-native";
 
 const commonstyles = require("./stylesheets/loginStyles");
 
@@ -17,23 +13,65 @@ function LoginScreen({ navigation }) {
 
   const CheckLogin = () => {
     var url = "http://192.168.0.7:4000/user/" + S_Email;
-    url
+    url;
     fetch(url, {
       method: "GET",
     })
-    .then((response) => response.text())
+      .then((response) => response.text())
       .then((data) => {
         var json = JSON.parse(data);
-        if(json.user.length == 0) {
+        if (json.user.length == 0) {
           alert("Invalid email or password, please try again");
           return;
         }
-        console.log("checking password " + S_Password + " Against db " + json.user[0].password);
-        if (json.user[0].password == S_Password) {
+        const user = json.user[0];
+
+        console.log(
+          "checking password " + S_Password + " Against db " + user.password
+        );
+        if (user.password == S_Password) {
           console.log("User Successfully logged in");
-          console.log(json.user[0]._id);
-          AsyncStorage.setItem("user_id", json.user[0]._id);
-          navigation.navigate("Home");
+          console.log(user);
+          console.log(user._id + " is a " + user.user_type);
+
+          if (user.user_type == "Patient") {
+            const details = user.patient_details;
+            let patient = new Patient(
+              user._id,
+              user.user_type,
+              user.first_name,
+              user.surname,
+              user.date_of_birth,
+              user.email,
+              user.password,
+              user.gender,
+              user.address1,
+              user.address2,
+              user.postcode,
+              details.seizure_triggers,
+              details.seizure_type,
+              details.seizure_monthly_frequency,
+              details.years_suffered,
+              details.mental_health_issues
+            );
+            navigation.navigate("Home", { User: patient });
+          } else {
+            let admin = new Admin(
+              user._id,
+              user.user_type,
+              user.first_name,
+              user.surname,
+              user.date_of_birth,
+              user.email,
+              user.password,
+              user.gender,
+              user.address1,
+              user.address2,
+              user.postcode
+            );
+          
+            navigation.navigate("Home", { User: admin });
+          }
         } else {
           alert("Invalid email or password, please try again");
           console.log("password incorrect");

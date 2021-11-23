@@ -37,7 +37,7 @@ export default function createAdmin({ navigation }) {
 
   const InsertData = () => {
     if (inputsValid) {
-      fetch("http://192.168.170.140:4000/add-user", {
+      fetch("http://192.168.0.7:4000/add-user", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -102,7 +102,7 @@ export default function createAdmin({ navigation }) {
         </View>
         <View style={{ flex: 4 }}>
           <DatePicker
-            style={styles.datePickerStyle}
+            style={commonstyles.datePickerStyle}
             date={date} // Initial date from state
             mode="date" // The enum of date, datetime and time
             placeholder="select date"
