@@ -37,7 +37,7 @@ export default function createAdmin({ navigation }) {
 
   const InsertData = () => {
     if (inputsValid) {
-      fetch("http://192.168.170.140:4000/add-user", {
+      fetch("http://192.168.0.7:4000/add-user", {
         method: "POST",
         headers: {
           Accept: "application/json",

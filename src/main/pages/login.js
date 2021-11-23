@@ -12,7 +12,7 @@ function LoginScreen({ navigation }) {
   const [S_Password, setPassword] = useState("");
 
   const CheckLogin = () => {
-    var url = "http://97.12.96.210:4000/user/" + S_Email;
+    var url = "http://192.168.0.7:4000/user/" + S_Email;
     url;
     fetch(url, {
       method: "GET",
@@ -54,7 +54,6 @@ function LoginScreen({ navigation }) {
               details.years_suffered,
               details.mental_health_issues
             );
-
             navigation.navigate("Home", { User: patient });
           } else {
             let admin = new Admin(
@@ -70,6 +69,7 @@ function LoginScreen({ navigation }) {
               user.address2,
               user.postcode
             );
+          
             navigation.navigate("Home", { User: admin });
           }
         } else {

@@ -3,7 +3,7 @@ import { Text, TextInput, Button, View, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 const styles = require("./stylesheets/styles");
 const homeStyle = require("./stylesheets/homeStyle");
-import Table from "react-native-simple-table"; 
+import Table from "react-native-simple-table";
 
 /************************
  *
@@ -40,7 +40,8 @@ const personalDetailsCol = [
 
 /************************
  * Home Function
- *************************/
+ *************************/ 
+
 export default function Home({ route, navigation }) {
   const User = route.params;
   const user = User.User;
@@ -51,8 +52,8 @@ export default function Home({ route, navigation }) {
    *
    *************************/
 
-  const loadSeizureDetailsView = () => {
-    if (user.getType() == "Patient") {
+  const loadSeizureDetailsView = () => {  
+    if (user.getType() == "Patient") { 
       return (
         <View style={styles.container}>
           <Text style={homeStyle.title}>Seizure Details: </Text>
@@ -97,7 +98,7 @@ export default function Home({ route, navigation }) {
                   .getSeizureDetails()
                   .getSeizureFreq()
                   .toString()}
-                placeholderTextColor={"black"}
+                placeholderTextColor={"black"} 
               ></TextInput>
             </View>
           </View>
@@ -135,23 +136,23 @@ export default function Home({ route, navigation }) {
   const patientDetailsArray = [];
 
   const loadAdminView = () => {
-    if (user.getType() == "Admin") {
-      var url = "http://97.12.96.210:4000/my-patients/" + user.getId();
+    if (user.getType() == "Admin") { 
+      var url = "http://192.168.0.7:4000/my-patients/" + user.getId(); 
       console.log(url);
-      fetch(url, {
+      fetch(url, { 
         method: "GET",
-      })
+      }) 
         .then((response) => response.text())
         .then((data) => {
           var json = JSON.parse(data);
           const myArray = json.myPatients;
-          for (var i = 0; i < myArray.length; i++) {
+          for (var i = 0; i < myArray.length; i++) { 
             const userId = myArray[i]._id;
             patientDetailsArray.push({
-              email: myArray[i].email,
+              user: myArray[i],
               name: myArray[i].first_name + " " + myArray[i].surname,
               DOB: myArray[i].date_of_birth,
-              id: userId,
+              id: userId, 
             });
           }
           user.setPatients(patientDetailsArray);
@@ -159,9 +160,9 @@ export default function Home({ route, navigation }) {
 
       const patientsList = user.getPatients();
 
-      for (var i = 0; i < patientsList.length; i++) {
+      for (var i = 0; i < patientsList.length; i++) { 
         const detail = patientsList[i];
-        const userEmail = detail.email;
+        const user = detail.user;
         patientDetailsArray.push({
           name: detail.name,
           DOB: detail.DOB,
@@ -169,7 +170,7 @@ export default function Home({ route, navigation }) {
             <Button
               title="View"
               onPress={() => {
-                navigation.navigate("Patient Details", { patient, userEmail });
+                navigation.navigate("Patient Details", { Patient: user });
               }}
             />
           ),
@@ -201,6 +202,7 @@ export default function Home({ route, navigation }) {
       );
     }
   };
+
   return (
     <ScrollView>
       <View style={homeStyle.container}>
@@ -211,7 +213,7 @@ export default function Home({ route, navigation }) {
 
         <View style={homeStyle.box}>
           <View style={{ flex: 4 }}>
-            <Text style={homeStyle.field}>First Name: </Text>
+            <Text style={homeStyle.field}>First Name: </Text> 
           </View>
           <View style={{ flex: 4 }}>
             <TextInput
@@ -225,7 +227,7 @@ export default function Home({ route, navigation }) {
           <View style={{ flex: 4 }}>
             <TextInput
               style={homeStyle.smallInputs}
-              value={user.getSurname()}
+              value={user.getSurname()} 
             ></TextInput>
           </View>
         </View>
@@ -263,7 +265,18 @@ export default function Home({ route, navigation }) {
         </View>
         <View style={homeStyle.box}>
           <View style={{ flex: 4 }}>
-            <Text style={homeStyle.field}>Address: </Text>
+            <Text style={homeStyle.field}>Date of birth : </Text>
+          </View>
+          <View style={{ flex: 4 }}>
+            <TextInput
+              style={homeStyle.inputs}
+              value={user.getDOB()}
+            ></TextInput>
+          </View>
+        </View>
+        <View style={homeStyle.box}>
+          <View style={{ flex: 4 }}>
+            <Text style={homeStyle.field}>Address: </Text> 
           </View>
           <View style={{ flex: 4 }}>
             <TextInput
@@ -274,18 +287,17 @@ export default function Home({ route, navigation }) {
         </View>
 
         <View style={homeStyle.box}>
-          <View style={{ flex: 4 }}>
+          <View style={{ flex: 4 }}> 
             <Text style={homeStyle.field}>City: </Text>
           </View>
           <View style={{ flex: 4 }}>
             <TextInput
-              style={homeStyle.inputs}
+              style={homeStyle.inputs} 
               value={user.getAddress().getCity()}
               placeholderTextColor="black"
             ></TextInput>
           </View>
         </View>
-
         {loadSeizureDetailsView()}
       </View>
       <View style={styles.btn}>
@@ -297,4 +309,3 @@ export default function Home({ route, navigation }) {
     </ScrollView>
   );
 }
-
