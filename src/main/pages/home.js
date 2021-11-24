@@ -161,7 +161,7 @@ export default function Home({ route, navigation }) {
 
       for (var i = 0; i < patientsList.length; i++) {
         const detail = patientsList[i];
-        const userId = detail.id;
+        const userEmail = detail.email;
         patientDetailsArray.push({
           name: detail.name,
           DOB: detail.DOB,
@@ -169,7 +169,7 @@ export default function Home({ route, navigation }) {
             <Button
               title="View"
               onPress={() => {
-                navigation.navigate("Patient Details", { id, userId });
+                navigation.navigate("Patient Details", { patient, userEmail });
               }}
             />
           ),
