@@ -23,7 +23,13 @@ export default function displayNav(navigation) {
       </View>
       <View style={navStyle.navButton}>
         <Button
-          color="black" title="Create Patient"
+          title="Media"
+          color="black" onPress={() => navigation.navigate("All Media")}
+        />
+      </View>
+      <View style={navStyle.navButton}>
+        <Button
+          color="black" title="Create"  
           onPress={() => navigation.navigate("Create Patient")}
         />
       </View>
