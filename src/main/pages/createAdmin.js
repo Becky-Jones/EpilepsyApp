@@ -4,6 +4,7 @@ import DatePicker from "react-native-datepicker";
 import { ScrollView } from "react-native-gesture-handler";
 const commonstyles = require("./stylesheets/styles");
 var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+import displayNav from "../components/NavBar";
 
 inputsValid = () => {
   if (S_Password != S_CPassword) {
@@ -22,7 +23,10 @@ inputsValid = () => {
   return true;
 };
 
-export default function createAdmin({ navigation }) {
+export default function createAdmin({ navigation, route }) {
+  const params = route.params;
+  const user = params.User;
+  const movies = params.Movies;
   const [date, setDate] = useState("15-11-2021");
 
   const [S_FName, setFName] = useState("");
@@ -68,6 +72,7 @@ export default function createAdmin({ navigation }) {
   };
   return (
     <ScrollView>
+            {displayNav(navigation, user, movies)}
       <Text style={commonstyles.text}>Practitioner Details:</Text>
       <View style={commonstyles.inlineInput}>
         <View style={{ flex: 4 }}>

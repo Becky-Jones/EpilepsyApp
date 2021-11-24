@@ -7,8 +7,10 @@ const styles = require("./stylesheets/styles");
 const mediaDetailsStyle = require("./stylesheets/mediaDetailsStyle");
 
 export default function MediaDetails({ route, navigation }) {
-  const WarningParam = route.params;
-  const Warnings = WarningParam.Warnings;
+  const params = route.params;
+  const user = params.User;
+  const movies = params.Movies;
+  const Warnings = params.Warnings;
 
   const columnsMediaTable = setupTable();
   var dataSourceMediaTable = getMediaDetails(Warnings);
@@ -16,7 +18,7 @@ export default function MediaDetails({ route, navigation }) {
 
   return (
     <>
-      {displayNav(navigation)}
+      {displayNav(navigation, user, movies)}
       <View style={styles.container}>
         {displayTable(columnsMediaTable, dataSourceMediaTable)}
       </View>
@@ -52,12 +54,10 @@ function setupTable() {
 function getMediaDetails(warnings) {
   const output = [];
   for (var x = 0; x < warnings.length; x++) {
-    console.log("s: " + warnings[x].triggerStart);
     output.push({
       triggerStart: warnings[x].triggerStart,
       triggerEnd: warnings[x].triggerEnd,
     });
   }
-  console.log(output[0])
   return [output];
 }

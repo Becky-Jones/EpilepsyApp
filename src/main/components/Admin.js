@@ -23,7 +23,7 @@ export class Admin {
     this.email = email;
     this.password = password;
     this.gender = gender;
-    this.patients = [];
+    this.patients = patients;
     this.Address = new Address(address, city, postcode);
   }
 

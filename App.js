@@ -25,7 +25,7 @@ export default function App() {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Patient Details" component={PatientDetails} />
       <Stack.Screen name="Media Details" component={MediaDetails} />
-      { <Stack.Screen name="All Media" component={AllMedia} /> }
+      <Stack.Screen name="All Media" component={AllMedia} />
     </Stack.Navigator>
   </NavigationContainer>
   );

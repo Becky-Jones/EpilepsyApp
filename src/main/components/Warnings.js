@@ -1,35 +1,23 @@
 export class Warnings {
     constructor(
-      triggerStart,
-      triggerEnd
+      warningsList,
     ) {
-      this.triggerStart = triggerStart;
-      this.triggerEnd = triggerEnd;
+      this.warningsList = warningsList;
     }
     /*****************************
      * GETTERS
      *****************************/
   
-    getTriggerStart() {
-      return this.triggerStart;
-    }
-  
-    getTriggerEnd() {
-      return this.triggerEnd;
+    getWarnings() {
+      return this.warningsList.toString();
     }
   
     /*****************************
      * SETTERS
      *****************************/
   
-    setTriggerStart(triggerStart) {
-      this.triggerStart = triggerStart;
-    }
-  
-    setTriggerEnd(triggerEnd) {
-      this.triggerEnd = triggerEnd;
-    }
-  
-  
+    setWarnings(warningsList) {
+      this.warningsList = warningsList;
+    }  
   }
   
