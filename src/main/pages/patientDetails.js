@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, Button, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Table from "react-native-simple-table";
+import displayNav from "../components/NavBar"; 
 
 
 //pull in common stylesheet and stylesheet for this page
