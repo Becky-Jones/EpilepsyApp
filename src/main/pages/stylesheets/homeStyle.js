@@ -54,6 +54,16 @@ module.exports = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
   },
+  btns : {
+    flexDirection:'row',
+    width: window.width, 
+    margin: 10, 
+    padding:4, 
+    alignItems:'center', 
+    justifyContent:'center', 
+    // backgroundColor: "white",
+    borderWidth: 1,
+  },
   box1 : {
     // flexDirection:'row',
     width: window.width, 
