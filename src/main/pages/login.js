@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   View,
+  Button
 } from "react-native";
 
 const commonstyles = require("./stylesheets/loginStyles");
@@ -74,6 +75,11 @@ function LoginScreen({ navigation }) {
       <TouchableOpacity style={commonstyles.loginBtn} onPress={CheckLogin}>
         <Text style={commonstyles.loginText}>LOGIN</Text>
       </TouchableOpacity>
+      <Button
+          style={commonstyles.btn}
+          title="Go to Analytics"
+          onPress={() => navigation.navigate("Analytics")}
+        />
     </View>
   );
 }

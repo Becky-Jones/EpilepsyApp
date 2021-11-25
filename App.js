@@ -7,6 +7,8 @@ import SignupScreen from './src/main/pages/createPatient.js'
 import Home from './src/main/pages/home.js'
 import PatientDetails from './src/main/pages/patientDetails.js'
 import MediaDetails from './src/main/pages/mediaDetails.js'
+import Analytics from './src/main/pages/analytics.js'
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -23,6 +25,7 @@ export default function App() {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Patient Details" component={PatientDetails} />
       <Stack.Screen name="Media Details" component={MediaDetails} />
+      <Stack.Screen name="Analytics" component={Analytics} />
     </Stack.Navigator>
   </NavigationContainer>
   );
