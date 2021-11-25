@@ -4,6 +4,7 @@ import DatePicker from "react-native-datepicker";
 import { ScrollView } from "react-native-gesture-handler";
 const commonstyles = require("./stylesheets/styles");
 var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+import displayNav from "../components/NavBar";
 
 inputsValid = () => {
   if (S_Password != S_CPassword) {
@@ -22,7 +23,10 @@ inputsValid = () => {
   return true;
 };
 
-export default function createAdmin({ navigation }) {
+export default function createAdmin({ navigation, route }) {
+  const params = route.params;
+  const user = params.User;
+  const movies = params.Movies;
   const [date, setDate] = useState("15-11-2021");
 
   const [S_FName, setFName] = useState("");
@@ -37,7 +41,7 @@ export default function createAdmin({ navigation }) {
 
   const InsertData = () => {
     if (inputsValid) {
-      fetch("http://192.168.170.140:4000/add-user", {
+      fetch("http://192.168.0.7:4000/add-user", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -68,6 +72,7 @@ export default function createAdmin({ navigation }) {
   };
   return (
     <ScrollView>
+            {displayNav(navigation, user, movies)}
       <Text style={commonstyles.text}>Practitioner Details:</Text>
       <View style={commonstyles.inlineInput}>
         <View style={{ flex: 4 }}>
@@ -102,7 +107,7 @@ export default function createAdmin({ navigation }) {
         </View>
         <View style={{ flex: 4 }}>
           <DatePicker
-            style={styles.datePickerStyle}
+            style={commonstyles.datePickerStyle}
             date={date} // Initial date from state
             mode="date" // The enum of date, datetime and time
             placeholder="select date"

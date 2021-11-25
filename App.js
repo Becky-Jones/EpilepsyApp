@@ -9,12 +9,14 @@ import PatientDetails from './src/main/pages/patientDetails.js'
 import MediaDetails from './src/main/pages/mediaDetails.js'
 import Analytics from './src/main/pages/analytics.js'
 
+import AllMedia from './src/main/pages/allMedia.js'
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
   return (
 
   <NavigationContainer>
@@ -26,11 +28,11 @@ export default function App() {
       <Stack.Screen name="Patient Details" component={PatientDetails} />
       <Stack.Screen name="Media Details" component={MediaDetails} />
       <Stack.Screen name="Analytics" component={Analytics} />
+      <Stack.Screen name="All Media" component={AllMedia} />
     </Stack.Navigator>
   </NavigationContainer>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {

@@ -13,6 +13,7 @@ import DatePicker from "react-native-datepicker";
 import ListTriggersItems from "../components/ListTriggersItems";
 import AddTriggersItem from "../components/AddTriggersItem";
 import DropDownPicker from "react-native-dropdown-picker";
+import displayNav from "../components/NavBar";
 
 inputsValid = () => {
   if (S_Password != S_CPassword) {
@@ -31,7 +32,10 @@ inputsValid = () => {
   return true;
 };
 
-export default function createPatient({ navigation }) {
+export default function createPatient({ route, navigation }) {
+  const params = route.params;
+  const user = params.User;
+  const movies = params.Movies;
   const [typelist, settypeList] = useState([]);
   const [date, setDate] = useState("15-11-2021");
 
@@ -124,7 +128,7 @@ export default function createPatient({ navigation }) {
             seizure_triggers: triggersArray,
             seizure_monthly_frequency: S_MonthlyFreq,
             mental_health_issues: MHArray,
-            practitioner_id: value
+            practitioner_id: value,
           },
         }),
       })
@@ -140,12 +144,11 @@ export default function createPatient({ navigation }) {
   };
 
   var practitioners = [];
+  var url = "http://192.168.0.7:4000/admins";
 
-  fetch("http://192.168.0.7:4000/admins", {
-    method: "GET",
-  })
-    .then((response) => response.text())
-    .then((data) => {
+  fetch(url)
+    .then((r) => r.text())
+    .then(function (data) {
       var json = JSON.parse(data);
       for (var i = 0; i < json.admins.length; i++) {
         var name = json.admins[i].first_name + " " + json.admins[i].surname;
@@ -156,12 +159,14 @@ export default function createPatient({ navigation }) {
     .catch((error) => {
       console.error(error);
     });
+
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState(practitioners);
 
   return (
     <ScrollView>
+      {displayNav(navigation, user, movies)}
       <Text style={commonstyles.text}>Patient Details:</Text>
       <View style={commonstyles.inlineInput}>
         <View style={{ flex: 4 }}>
@@ -209,8 +214,6 @@ export default function createPatient({ navigation }) {
             mode="date" // The enum of date, datetime and time
             placeholder="select date"
             format="DD-MM-YYYY"
-            minDate="01-01-1921"
-            maxDate="01-01-2022"
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
             customStyles={{
@@ -302,7 +305,7 @@ export default function createPatient({ navigation }) {
             color: "white",
             width: 300,
             alignItems: "center",
-            marginLeft: 30
+            marginLeft: 30,
           }}
         />
       </View>
