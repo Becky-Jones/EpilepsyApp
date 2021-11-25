@@ -14,6 +14,7 @@ export class Patient {
     address,
     city,
     postcode,
+    practitionerId,
     seizureTriggers,
     seizureTypes,
     seizureFreq,
@@ -29,6 +30,7 @@ export class Patient {
     this.password = password;
     this.gender = gender;
     this.Address = new Address(address, city, postcode);
+    this.practitionerId = practitionerId;
     this.seizureDetails = new SeizureDetails(
       seizureTriggers,
       seizureTypes,
@@ -84,6 +86,11 @@ export class Patient {
   getSeizureDetails() {
     return this.seizureDetails;
   }
+  
+  getPractitionerId() {
+    return this.practitionerId;
+  }
+
 
   /*****************************
    * SETTERS
@@ -117,4 +124,7 @@ export class Patient {
     this.gender = gender;
   }
 
+  setPractitionerId(id) {
+    this.practitionerId = id;
+  }
 }

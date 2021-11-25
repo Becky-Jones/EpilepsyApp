@@ -6,6 +6,7 @@ import CreateAdmin from './src/main/pages/createAdmin.js'
 import SignupScreen from './src/main/pages/createPatient.js'
 import Home from './src/main/pages/home.js'
 import PatientDetails from './src/main/pages/patientDetails.js'
+import PersonalDetails from './src/main/pages/personalDetails.js'
 import MediaDetails from './src/main/pages/mediaDetails.js'
 import AllMedia from './src/main/pages/allMedia.js'
 import { NavigationContainer } from "@react-navigation/native";
@@ -26,6 +27,7 @@ export default function App() {
       <Stack.Screen name="Patient Details" component={PatientDetails} />
       <Stack.Screen name="Media Details" component={MediaDetails} />
       <Stack.Screen name="All Media" component={AllMedia} />
+      <Stack.Screen name="Edit Personal Details" component={PersonalDetails} />
     </Stack.Navigator>
   </NavigationContainer>
   );

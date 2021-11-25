@@ -85,6 +85,7 @@ function LoginScreen({ navigation }) {
           console.log("User Successfully logged in");
           console.log(user);
           console.log(user._id + " is a " + user.user_type);
+          console.log(user._id + " has a practitioner of" + user.practitioner_id);
 
           if (user.user_type == "Patient") {
             const details = user.patient_details;
@@ -100,6 +101,7 @@ function LoginScreen({ navigation }) {
               user.address1,
               user.address2,
               user.postcode,
+              details.practitioner_id,
               details.seizure_triggers,
               details.seizure_type,
               details.seizure_monthly_frequency,
