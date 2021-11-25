@@ -2,13 +2,14 @@ import React, { useState } from "react";
 
 import { StatusBar } from "expo-status-bar";
 import { ScrollView } from "react-native-gesture-handler";
+import displayNav from "../components/NavBar";
 
 import {
-  Text,
-  TouchableOpacity,
-  TextInput,
-  View,
-  Dimensions
+    Text,
+    TouchableOpacity,
+    TextInput,
+    View,
+    Dimensions
 } from "react-native";
 import {
     LineChart,
@@ -17,95 +18,71 @@ import {
     ProgressChart,
     ContributionGraph,
     StackedBarChart
-  } from 'react-native-chart-kit'
+} from 'react-native-chart-kit'
 
 const commonstyles = require("./stylesheets/styles");
 const analyticsStyle = require("./stylesheets/analyticsStyle");
 
-const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
-		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
+    '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+    '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
 		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
-		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+    '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
+    '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+    '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
 		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', 
-		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+    '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
+    '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+    '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
 		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
-		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+    '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
+    '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+    '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
 		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
-		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+    '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
+    '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
 
 const barChartConfig = {
     backgroundGradientFrom: "#fff",
     backgroundGradientTo: "#fff",
     barPercentage: 0.7,
-    height:5000,
+    height: 5000,
     fillShadowGradient: `rgba(1, 122, 205, 1)`,
     fillShadowGradientOpacity: 1,
     decimalPlaces: 0, // optional, defaults to 2dp
     color: (opacity = 1) => `rgba(1, 122, 205, 1)`,
     labelColor: (opacity = 1) => `rgba(0, 0, 0, 1)`,
-  
+
     style: {
-      borderRadius: 16,
-      fontFamily: "Bogle-Regular",
+        borderRadius: 16,
+        fontFamily: "Bogle-Regular",
     },
     propsForBackgroundLines: {
-      strokeWidth: 1,
-      stroke: "#e3e3e3",
-      strokeDasharray: "0",
+        strokeWidth: 1,
+        stroke: "#e3e3e3",
+        strokeDasharray: "0",
     },
     propsForLabels: {
-      fontFamily: "Bogle-Regular",
+        fontFamily: "Bogle-Regular",
     },
 }
 
 // charts built using: https://www.instamobile.io/react-native-tutorials/react-native-charts/
-function Analytics({ navigation }) {
-    if (!patients){
-    console.log("Getting Patients...")
-    var url = "http://192.168.0.2:4000/patients";
-    console.log(url);
-    fetch(url, {
-        method: "GET",
-    })
-    .then((response) => response.text())
-        .then((data) => {
-        var json = JSON.parse(data);
-        setPatients(json.patients);
-        })
-        .catch((error) => {
-        alert("An error occurred, please try again");
-        console.error(error);
-    });
-
-    console.log("Getting Admins...")
-    var url = "http://192.168.0.2:4000/admins";
-    console.log(url);
-    fetch(url, {
-      method: "GET",
-    })
-    .then((response) => response.text())
-      .then((data) => {
-        var json = JSON.parse(data);
-        setAdmins(json.admins);
-      })
-      .catch((error) => {
-        alert("An error occurred, please try again");
-        console.error(error);
-      });
-    }
-    
-    const [patients, setPatients] = useState([]);
-    const [admins, setAdmins] = useState([]);
+function Analytics({ route, navigation }) {
+    const params = route.params;
+    const user = params.User;
+    const movies = params.Movies;
+    const patients = params.Patients;
+    const patientsList = patients.getPatients();
 
     const SeizureTypesChart = () => {
         console.log("Setting up SeizureTypesChart...")
         let seizureTypeChartLabels = [];
         let seizureTypeChartData = [];
 
-        let patientsList = patients;
 
         //For each patient
-        for(let i = 0; i < patientsList.length; i++) {
+        for (let i = 0; i < patientsList.length; i++) {
             let patient = patientsList[i];
             let seizureTypes = patient.patient_details.seizure_type;
 
@@ -124,7 +101,7 @@ function Analytics({ navigation }) {
                     seizureTypeChartData.push(1)
                 } else {
                     seizureTypeChartData[indexOfType] = seizureTypeChartData[indexOfType] + 1
-                }                    
+                }
             }
 
 
@@ -136,23 +113,23 @@ function Analytics({ navigation }) {
                 data: seizureTypeChartData,
             }],
         };
-        
+
         return (
             <View >
-                <View style={{flex: 1}}>
+                <View style={{ flex: 1 }}>
                     <Text>Seizure Types</Text>
                 </View>
                 <View>
-                <BarChart
-                    data={seizureTypeData}
-                    width={Dimensions.get('window').width}
-                    height={220}
-                    yAxisLabel={''}
-                    chartConfig = {barChartConfig}
+                    <BarChart
+                        data={seizureTypeData}
+                        width={Dimensions.get('window').width}
+                        height={220}
+                        yAxisLabel={''}
+                        chartConfig={barChartConfig}
                     />
                 </View>
             </View>
-        ); 
+        );
     }
 
     const TriggersChart = () => {
@@ -160,10 +137,8 @@ function Analytics({ navigation }) {
         let triggerChartLabels = [];
         let triggerChartData = [];
 
-        let patientsList = patients;
-
         //For each patient
-        for(let i = 0; i < patientsList.length; i++) {
+        for (let i = 0; i < patientsList.length; i++) {
             let patient = patientsList[i];
             let triggers = patient.patient_details.seizure_triggers;
 
@@ -183,7 +158,7 @@ function Analytics({ navigation }) {
                     triggerChartData.push(1)
                 } else {
                     triggerChartData[indexOfType] = triggerChartData[indexOfType] + 1
-                }                    
+                }
             }
         }
 
@@ -197,60 +172,55 @@ function Analytics({ navigation }) {
                     color: colorArray[i],
                     legendFontColor: '#7F7F7F',
                     legendFontSize: 15,
-                    
+
                 }
             );
         }
 
         return (
-        <View>
-            <View style={{flex: 1}}>
-                <Text>Seizure Triggers</Text>
-            </View>
             <View>
+                <View style={{ flex: 1 }}>
+                    <Text>Seizure Triggers</Text>
+                </View>
+                <View>
 
-                <PieChart
-                data={pieDataArr}
-                width={Dimensions.get('window').width - 16}
-                height={220}
-                chartConfig={{
-                    backgroundColor: '#1cc910',
-                    backgroundGradientFrom: '#eff3ff',
-                    backgroundGradientTo: '#efefef',
-                    decimalPlaces: 2,
-                    color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                    style: {
-                    borderRadius: 16,
-                    },
-                }}
-                style={{
-                    marginVertical: 8,
-                    borderRadius: 16,
-                }}
-                accessor="population"
-                backgroundColor="transparent"
-                paddingLeft="15"
-                absolute //for the absolute number remove if you want percentage
-                />
-            </View>
-        </View>);
+                    <PieChart
+                        data={pieDataArr}
+                        width={Dimensions.get('window').width - 16}
+                        height={220}
+                        chartConfig={{
+                            backgroundColor: '#1cc910',
+                            backgroundGradientFrom: '#eff3ff',
+                            backgroundGradientTo: '#efefef',
+                            decimalPlaces: 2,
+                            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                            style: {
+                                borderRadius: 16,
+                            },
+                        }}
+                        style={{
+                            marginVertical: 8,
+                            borderRadius: 16,
+                        }}
+                        accessor="population"
+                        backgroundColor="transparent"
+                        paddingLeft="15"
+                        absolute //for the absolute number remove if you want percentage
+                    />
+                </View>
+            </View>);
     }
 
-    
-    
-    
     const MentalHealthIssuesChart = () => {
         console.log("Setting up MentalHealthIssuesChart...")
         let mentalHealthChartLabels = [];
         let mentalHealthChartData = [];
 
-        let patientsList = patients;
-
         //For each patient
         for(let i = 0; i < patientsList.length; i++) {
             let patient = patientsList[i];
             let mentalHealths = patient.patient_details.mental_health_issues;
-
+            
             //For each patient seizure
             for (let mentalHealth of mentalHealths) {
                 mentalHealth = mentalHealth.toLowerCase();
@@ -266,10 +236,10 @@ function Analytics({ navigation }) {
                     mentalHealthChartData.push(1)
                 } else {
                     mentalHealthChartData[indexOfType] = mentalHealthChartData[indexOfType] + 1
-                }                    
+                }
             }
 
-            
+
         }
 
         let mentalHealthData = {
@@ -278,35 +248,36 @@ function Analytics({ navigation }) {
                 data: mentalHealthChartData,
             }],
         };
-        
+
         return (
             <View >
-                <View style={{flex: 1}}>
+                <View style={{ flex: 1 }}>
                     <Text>Mental Health Issues</Text>
                 </View>
                 <View>
-                <BarChart
-                    data={mentalHealthData}
-                    width={Dimensions.get('window').width}
-                    height={220}
-                    yAxisLabel={''}
-                    chartConfig = {barChartConfig}
+                    <BarChart
+                        data={mentalHealthData}
+                        width={Dimensions.get('window').width}
+                        height={220}
+                        yAxisLabel={''}
+                        chartConfig={barChartConfig}
                     />
                 </View>
             </View>
-        ); 
+        );
     }
 
     return (
         <ScrollView style={commonstyles.container}>
-        <Text style={analyticsStyle.header}>Analytics Screen</Text>
-        <StatusBar style="auto" />
+            {displayNav(navigation, user, movies, patients)}
+            <Text style={analyticsStyle.header}>Analytics Screen</Text>
+            <StatusBar style="auto" />
             <SeizureTypesChart></SeizureTypesChart>
             <TriggersChart></TriggersChart>
             <MentalHealthIssuesChart></MentalHealthIssuesChart>
         </ScrollView>
     );
-    
+
 }
 
 export default Analytics;
