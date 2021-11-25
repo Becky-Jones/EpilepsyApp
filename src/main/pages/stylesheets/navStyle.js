@@ -14,5 +14,8 @@ module.exports = StyleSheet.create({
   },
   navButton: {
     height: 40,
+  },
+  text :{
+
   }
   });

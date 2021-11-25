@@ -4,6 +4,7 @@ import { ScrollView } from "react-native-gesture-handler";
 const styles = require("./stylesheets/styles");
 const homeStyle = require("./stylesheets/homeStyle");
 import Table from "react-native-simple-table";
+import displayNav from "../components/NavBar";
 
 /************************
  *
@@ -43,9 +44,9 @@ const personalDetailsCol = [
  *************************/ 
 
 export default function Home({ route, navigation }) {
-  const User = route.params;
-  const user = User.User;
-
+  const params = route.params;
+  const user = params.User;
+  const movies = params.Movies;
   /************************
    *
    * Returned Views
@@ -136,33 +137,12 @@ export default function Home({ route, navigation }) {
   const patientDetailsArray = [];
 
   const loadAdminView = () => {
-    if (user.getType() == "Admin") { 
-      var url = "http://192.168.0.7:4000/my-patients/" + user.getId(); 
-      console.log(url);
-      fetch(url, { 
-        method: "GET",
-      }) 
-        .then((response) => response.text())
-        .then((data) => {
-          var json = JSON.parse(data);
-          const myArray = json.myPatients;
-          for (var i = 0; i < myArray.length; i++) { 
-            const userId = myArray[i]._id;
-            patientDetailsArray.push({
-              user: myArray[i],
-              name: myArray[i].first_name + " " + myArray[i].surname,
-              DOB: myArray[i].date_of_birth,
-              id: userId, 
-            });
-          }
-          user.setPatients(patientDetailsArray);
-        });
-
+    if (user.getType() == "Admin") {
       const patientsList = user.getPatients();
 
-      for (var i = 0; i < patientsList.length; i++) { 
+      for (var i = 0; i <patientsList.length; i++) { 
         const detail = patientsList[i];
-        const user = detail.user;
+        const patient = detail.user;
         patientDetailsArray.push({
           name: detail.name,
           DOB: detail.DOB,
@@ -170,7 +150,7 @@ export default function Home({ route, navigation }) {
             <Button
               title="View"
               onPress={() => {
-                navigation.navigate("Patient Details", { Patient: user });
+                navigation.navigate("Patient Details", { User: user, Patient: patient, Movies: movies });
               }}
             />
           ),
@@ -179,16 +159,18 @@ export default function Home({ route, navigation }) {
 
       return (
         <View style={styles.container}>
+          <View style={{flexDirection: 'row', marginLeft: 60}}>
           <Button
-            stlye={styles.btn}
-            title="Go to Create Patient"
-            onPress={() => navigation.navigate("Create Patient")}
+            style={styles.btn}
+            title="Create Patient"
+            onPress={() => navigation.navigate("Create Patient", {User: user, Movies:movies})}
           />
           <Button
-            stlye={styles.btn}
-            title="Go to Create Admin"
-            onPress={() => navigation.navigate("Create Practitioner")}
+            style={styles.btn}
+            title="Create Admin"
+            onPress={() => navigation.navigate("Create Practitioner", {User: user, Movies: movies})}
           />
+          </View>
           <Text style={homeStyle.title}>Patients: </Text>
           <View style={homeStyle.table}>
             <Table
@@ -198,6 +180,7 @@ export default function Home({ route, navigation }) {
               dataSource={patientDetailsArray}
             />
           </View>
+          
         </View>
       );
     }
@@ -205,6 +188,7 @@ export default function Home({ route, navigation }) {
 
   return (
     <ScrollView>
+    {displayNav(navigation, user, movies)}
       <View style={homeStyle.container}>
         <Text style={homeStyle.header}>Home Screen</Text>
       </View>

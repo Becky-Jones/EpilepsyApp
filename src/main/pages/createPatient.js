@@ -13,6 +13,7 @@ import DatePicker from "react-native-datepicker";
 import ListTriggersItems from "../components/ListTriggersItems";
 import AddTriggersItem from "../components/AddTriggersItem";
 import DropDownPicker from "react-native-dropdown-picker";
+import displayNav from "../components/NavBar";
 
 inputsValid = () => {
   if (S_Password != S_CPassword) {
@@ -31,7 +32,10 @@ inputsValid = () => {
   return true;
 };
 
-export default function createPatient({ navigation }) {
+export default function createPatient({ route, navigation }) {
+  const params = route.params;
+  const user = params.User;
+  const movies = params.Movies;
   const [typelist, settypeList] = useState([]);
   const [date, setDate] = useState("15-11-2021");
 
@@ -138,31 +142,23 @@ export default function createPatient({ navigation }) {
         });
     }
   };
-  var cache = {}
 
   var practitioners = [];
   var url = "http://192.168.0.7:4000/admins";
 
-  if (cache[url]) {
-    callback(cache[url]);
-    return;
-  } else {
-    fetch(url)
-      .then((r) => r.text())
-      .then(function (data) {
-        cache[url] = data;
-        callback(data);
-        var json = JSON.parse(data);
-        for (var i = 0; i < json.admins.length; i++) {
-          var name = json.admins[i].first_name + " " + json.admins[i].surname;
-          practitioners.push({ label: name, value: json.admins[i]._id });
-          console.log("ADMIN: " + json.admins[i]._id);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+  fetch(url)
+    .then((r) => r.text())
+    .then(function (data) {
+      var json = JSON.parse(data);
+      for (var i = 0; i < json.admins.length; i++) {
+        var name = json.admins[i].first_name + " " + json.admins[i].surname;
+        practitioners.push({ label: name, value: json.admins[i]._id });
+        console.log("ADMIN: " + json.admins[i]._id);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -170,6 +166,7 @@ export default function createPatient({ navigation }) {
 
   return (
     <ScrollView>
+      {displayNav(navigation, user, movies)}
       <Text style={commonstyles.text}>Patient Details:</Text>
       <View style={commonstyles.inlineInput}>
         <View style={{ flex: 4 }}>
