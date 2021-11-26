@@ -38,6 +38,14 @@ module.exports = StyleSheet.create({
     padding: 8,
     fontSize: 12,
   },
+  longInputs : {
+    borderRadius: 14,
+    width: 150,
+    height: 60,
+    backgroundColor: "white",
+    padding: 8,
+    fontSize: 12,
+  },
   field : {
     fontSize: 12,
     color: "grey",

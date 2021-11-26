@@ -15,54 +15,6 @@ function LoginScreen({ navigation }) {
   const [S_Email, setEmail] = useState("");
   const [S_Password, setPassword] = useState("");
 
-  const LoadMovies = () => {
-    fetch("http://192.168.0.7:4000/movies", {
-      method: "GET",
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        console.log("GETS MOVIES!!");
-        var json = JSON.parse(data);
-        const moviesArray = json.movies;
-        const moviesList = [];
-        for (var i = 0; i < moviesArray.length; i++) {
-          const movie = new Movie(
-            moviesArray[i]._id,
-            moviesArray[i].title,
-            moviesArray[i].warnings,
-            moviesArray[i].length
-          );
-          moviesList.push(movie);
-        }
-        let movies = new Movies(moviesList);
-        return movies;
-      });
-  };
-
-  const loadPatients = (adminId) => {
-    const patientDetailsArray = [];
-    var url = "http://192.168.0.7:4000/my-patients/" + adminId;
-    console.log(url);
-    fetch(url, {
-      method: "GET",
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        var json = JSON.parse(data);
-        const myArray = json.myPatients;
-        for (var i = 0; i < myArray.length; i++) {
-          const userId = myArray[i]._id;
-          patientDetailsArray.push({
-            user: myArray[i],
-            name: myArray[i].first_name + " " + myArray[i].surname,
-            DOB: myArray[i].date_of_birth,
-            id: userId,
-          });
-        }
-        return patientDetailsArray;
-      });
-  };
-
   const CheckLogin = () => {
     var url = "http://192.168.0.7:4000/user/" + S_Email;
     url;
@@ -109,7 +61,6 @@ function LoginScreen({ navigation }) {
               details.mental_health_issues
             );
 
-            // const movies = LoadMovies();
             // LOAD MOVIES!!
             const movies = new Movies();
             var warningsList = [];
