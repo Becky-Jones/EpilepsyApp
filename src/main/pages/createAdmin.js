@@ -64,7 +64,7 @@ export default function createAdmin({ navigation, route }) {
         .then((response) => {
           console.log("Admin created successfully");
           alert("Admin created Successfully");
-          navigation.navigate("Home");
+          navigation.navigate("Home", {User: user, Movies: movies, Patients: analyticsInfo});
         })
         .catch((error) => {
           console.log(error);

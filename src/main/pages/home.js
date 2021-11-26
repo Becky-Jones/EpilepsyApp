@@ -126,7 +126,10 @@ export default function Home({ route, navigation }) {
             <View style={{ flex: 4 }}>
               <TextInput
                 style={homeStyle.inputs}
-                placeholder={user.getSeizureDetails().getMHIssues().toString()}
+                placeholder={user
+                .getSeizureDetails()
+                .getMHIssues()
+                .toString()}
                 placeholderTextColor={"black"}
               ></TextInput>
             </View>
@@ -151,7 +154,12 @@ export default function Home({ route, navigation }) {
             <Button
               title="View"
               onPress={() => {
-                navigation.navigate("Patient Details", { User: user, Patient: patient, Movies: movies });
+                navigation.navigate("Patient Details", {
+                  User: user,
+                  Patient: patient,
+                  Movies: movies,
+                  Patients: analyticsInfo
+                });
               }}
             />
           ),
@@ -160,7 +168,7 @@ export default function Home({ route, navigation }) {
 
       return (
         <View style={styles.container}>
-          <View style={{ flexDirection: 'row', marginLeft: 60 }}>
+          <View style={{ flexDirection: 'row'}}>
             <Button
               style={styles.btn}
               title="Create Patient"
@@ -186,7 +194,6 @@ export default function Home({ route, navigation }) {
               dataSource={patientDetailsArray}
             />
           </View>
-
         </View>
       );
     }
@@ -288,13 +295,21 @@ export default function Home({ route, navigation }) {
             ></TextInput>
           </View>
         </View>
+        <View style={styles.btn}>
+          <Button
+            title="Edit Personal Details"
+            onPress={() =>
+              navigation.navigate("Edit Personal Details", {
+                User: user,
+                Movies: movies,
+                Patients: analyticsInfo
+              })
+            }
+          />
+        </View>
         {loadSeizureDetailsView()}
       </View>
-      <View style={styles.btn}>
-        {/* <TouchableOpacity style={styles.btn}>
-            <Text>Save Changes</Text>
-          </TouchableOpacity> */}
-      </View>
+
       {loadAdminView()}
     </ScrollView>
   );

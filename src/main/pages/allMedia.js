@@ -7,27 +7,11 @@ import { Warnings } from "../components/Warnings";
 const styles = require("./stylesheets/styles");
 const mediaDetailsStyle = require("./stylesheets/mediaDetailsStyle");
 
-// //this function needs updating to actually call DB. DB does not work with iOS
-// function getMediaDetailsFromDB() {
-//   fetch("http://192.168.0.7:4000/movies", {
-//     method: "GET",
-//   })
-//     .then((response) => response.text())
-//     .then((data) => {
-//       var json = JSON.parse(data);
-//       // const myArray = json.movies;
-//       const moviesArray = json.movies;
-//       // const
-//       for(var i = 0; i < moviesArray.length; i++){
-//           const movie = new Movie(moviesArray[i]._id, moviesArray[i]._id, moviesArray[i]._id, moviesArray[i]._id);
-//       }
-//     });
-// }
-
 export default function MediaDetails({ navigation, route }) {
   const params = route.params;
   const user = params.User;
   const movies = params.Movies;
+  const analyticsInfo = params.Patients;
   console.log("MOVIES: " + JSON.stringify(movies));
   const columnsMediaTable = setupTable();
   // const mediaDetails = getMediaDetails();
@@ -35,7 +19,8 @@ export default function MediaDetails({ navigation, route }) {
     movies,
     navigation,
     user,
-    movies
+    movies,
+    analyticsInfo
   );
 
   return (
@@ -63,7 +48,7 @@ function displayMediaTable(columnsMediaTable, mediaDetailsFormattedForTable) {
 }
 
 //this function fixes a weird problem where array is created within an array
-function formatMediaDetails(dataSourceMediaTable, navigation, user, movies) {
+function formatMediaDetails(dataSourceMediaTable, navigation, user, movies, analyticsInfo) {
   const mediaDetailsFormattedForTable = [];
   const films = dataSourceMediaTable.movies;
   for (var x = 0; x < films.length; x++) {
@@ -78,6 +63,7 @@ function formatMediaDetails(dataSourceMediaTable, navigation, user, movies) {
             navigation.navigate("Media Details", {
               User: user,
               Movies: movies,
+              Paients: analyticsInfo,
               Warnings: warning,
             })
           }

@@ -18,11 +18,11 @@ export class SeizureDetails {
   }
 
   getSeizureTriggers() {
-    return this.seizureTriggers.toString();
+    return this.seizureTriggers;
   }
 
   getSeizureTypes() {
-    return this.seizureTypes.toString();
+    return this.seizureTypes;
   }
 
   getYearsSuffered() {
@@ -30,7 +30,7 @@ export class SeizureDetails {
   }
 
   getMHIssues() {
-    return this.MHIssues.toString();
+    return this.MHIssues;
   }
 
   getSeizureDetails() {

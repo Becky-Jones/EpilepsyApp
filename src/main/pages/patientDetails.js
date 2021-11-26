@@ -2,9 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, Button, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import Table from "react-native-simple-table";
-import displayNav from "../components/NavBar"; 
-
+import { Patient } from "../components/Patient";
 //pull in common stylesheet and stylesheet for this page
 const styles = require("./stylesheets/styles");
 const patientDetailsStyle = require("./stylesheets/patientDetailsStyle");
@@ -12,143 +10,82 @@ const patientDetailsStyle = require("./stylesheets/patientDetailsStyle");
 export default function PatientDetail({ route, navigation }) {
   const params = route.params;
   const patient = params.Patient;
+  const User = params.User;
+  const details = patient.patient_details;
+  const movies = params.Movies;
+  const analyticsInfo = params.Patients;
+  const user = new Patient(
+    patient._id,
+    patient.user_type,
+    patient.first_name,
+    patient.surname,
+    patient.date_of_birth,
+    patient.email,
+    patient.password,
+    patient.gender,
+    patient.address1,
+    patient.address2,
+    patient.postcode,
+    details.practitioner_id,
+    details.seizure_triggers,
+    details.seizure_type,
+    details.seizure_monthly_frequency,
+    details.years_suffered,
+    details.mental_health_issues
+  );
 
-  //Patient Table Setup
-  // const { columnsPatientTable, dataSourcePatientTable } =
-  //   setupPatientTable(patient);
+  function loadPatientDetails() {
+    function updatePatient() {
+      console.log("NEW PATIENT INFO: " + JSON.stringify(user));
+      const json = {
+        first_name: user.getFirstName(),
+        surname: user.getSurname(),
+        date_of_birth: user.getDOB(),
+        gender: user.getGender(),
+        email: user.getEmail(),
+        password: user.password,
+        address1: user.Address.getAddressLine(),
+        address2: user.Address.getCity(),
+        postcode: user.Address.getPostcode(),
+        user_type: user.getType(),
+        patient_details: {
+          seizure_type: user.getSeizureDetails().seizureTypes,
+          years_suffered: user.getSeizureDetails().getYearsSuffered(),
+          seizure_triggers: user.getSeizureDetails().seizureTriggers,
+          seizure_monthly_frequency: user.getSeizureDetails().getSeizureFreq(),
+          mental_health_issues: user.getSeizureDetails().MHIssues,
+          practitioner_id: user.getPractitionerId(),
+        },
+      };
+      console.log(JSON.stringify(json));
+      if (inputsValid) {
+        var url = "http://192.168.0.7:4000/edit-user/" + user.getId();
+        console.log(url);
+        fetch(url, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(json),
+        })
+          .then((response) => {
+            console.log("Details successfully Updated: " + response.status);
+            alert("Details Successfully Updated - Changes will be reflected when you next sign in");
+            navigation.navigate("Home", { User: User, Movies: movies, Patients: analyticsInfo });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    }
 
-  //Media Table Setup
-  // const { columnsMediaTable, dataSourceMediaTable } = setupMediaTable();
-
-  // //Create patient details
-  // const patientDetail = (
-  //   <View style={styles.container}>
-  //     <Text style={patientDetailsStyle.title}>
-  //       {" "}
-  //       {patient.first_name}'s Details
-  //     </Text>
-  //     <View style={patientDetailsStyle.table}>
-  //       <Table
-  //         height={420}
-  //         columnWidth={150}
-  //         columns={columnsPatientTable}
-  //         dataSource={dataSourcePatientTable}
-  //       />
-  //     </View>
-  //   </View>
-  // );
-
-  // //Create media list
-  // const mediaList = (
-  //   <View style={styles.container}>
-  //     <Text style={patientDetailsStyle.title}>Media Details</Text>
-  //     <View style={patientDetailsStyle.table}>
-  //       <Table
-  //         height={420}
-  //         columnWidth={150}
-  //         columns={columnsMediaTable}
-  //         dataSource={dataSourceMediaTable}
-  //       />
-  //     </View>
-  //   </View>
-  // );
-
-  // function setupMediaTable() {
-  //   //Creating tables for Media Table
-  //   const columnsMediaTable = [
-  //     {
-  //       title: "Media Name",
-  //       dataIndex: "mediaName",
-  //       width: 105,
-  //     },
-  //     {
-  //       title: "Media Link",
-  //       dataIndex: "mediaLink",
-  //       width: 105,
-  //     },
-  //   ];
-  //   //Values for Media table are hardcoded for now. Will be populated after reading from database
-  //   const dataSourceMediaTable = [
-  //     {
-  //       mediaName: "John Wick",
-  //       mediaLink: (
-  //         <Button
-  //           title="View Details"
-  //           onPress={() => navigation.navigate("Media Details")}
-  //         />
-  //       ),
-  //     },
-  //     {
-  //       mediaName: "John Wick 2",
-  //       mediaLink: (
-  //         <Button
-  //           title="View Details"
-  //           onPress={() => navigation.navigate("Media Details")}
-  //         />
-  //       ),
-  //     },
-  //     {
-  //       mediaName: "John Wick 3",
-  //       mediaLink: (
-  //         <Button
-  //           title="View Details"
-  //           onPress={() => navigation.navigate("Media Details")}
-  //         />
-  //       ),
-  //     },
-  //     {
-  //       mediaName: "Toy Story 1",
-  //       mediaLink: (
-  //         <Button
-  //           title="View Details"
-  //           onPress={() => navigation.navigate("Media Details")}
-  //         />
-  //       ),
-  //     },
-  //     {
-  //       mediaName: "Toy Story 2",
-  //       mediaLink: (
-  //         <Button
-  //           title="View Details"
-  //           onPress={() => navigation.navigate("Media Details")}
-  //         />
-  //       ),
-  //     },
-  //     {
-  //       mediaName: "Toy Story 3",
-  //       mediaLink: (
-  //         <Button
-  //           title="View Details"
-  //           onPress={() => navigation.navigate("Media Details")}
-  //         />
-  //       ),
-  //     },
-  //   ];
-  //   return { columnsMediaTable, dataSourceMediaTable };
-  // }
-
-  function loadPatientDetails(patient) {
-    const dataSourcePatientTable = [];
-
-    //Creating columns for Patient Table
-    const columnsPatientTable = [
-      {
-        title: "Key",
-        dataIndex: "key",
-        width: 105,
-      },
-      {
-        title: "Value",
-        dataIndex: "value",
-        width: 105,
-      },
-    ];
-
-    const details = patient.patient_details;
     return (
       <ScrollView>
         <View style={styles.container}>
-          <Text style={patientDetailsStyle.title}>{patient.first_name}'s Details:</Text>
+          <Text style={patientDetailsStyle.title}>
+            {user.getFirstName()}'s Details:
+          </Text>
           <View style={patientDetailsStyle.box}>
             <View style={{ flex: 4 }}>
               <Text style={patientDetailsStyle.field}>First Name: </Text>
@@ -156,7 +93,8 @@ export default function PatientDetail({ route, navigation }) {
             <View style={{ flex: 4 }}>
               <TextInput
                 style={patientDetailsStyle.smallInputs}
-                value={patient.first_name}
+                defaultValue={user.getFirstName()}
+                onChangeText={(text) => user.setFirstName(text)}
               ></TextInput>
             </View>
             <View style={{ flex: 4 }}>
@@ -165,7 +103,8 @@ export default function PatientDetail({ route, navigation }) {
             <View style={{ flex: 4 }}>
               <TextInput
                 style={patientDetailsStyle.smallInputs}
-                value={patient.surname}
+                defaultValue={user.getSurname()}
+                onChangeText={(text) => user.setSurname(text)}
               ></TextInput>
             </View>
           </View>
@@ -177,7 +116,8 @@ export default function PatientDetail({ route, navigation }) {
             <View style={{ flex: 4 }}>
               <TextInput
                 style={patientDetailsStyle.smallInputs}
-                value={patient.gender}
+                defaultValue={user.getGender()}
+                onChangeText={(text) => user.setGender(text)}
               ></TextInput>
             </View>
             <View style={{ flex: 4 }}>
@@ -186,7 +126,8 @@ export default function PatientDetail({ route, navigation }) {
             <View style={{ flex: 4 }}>
               <TextInput
                 style={patientDetailsStyle.smallInputs}
-                value={patient.postcode}
+                defaultValue={user.getAddress().getPostcode()}
+                onChangeText={(text) => user.Address.setPostcode(text)}
               ></TextInput>
             </View>
           </View>
@@ -197,7 +138,8 @@ export default function PatientDetail({ route, navigation }) {
             <View style={{ flex: 4 }}>
               <TextInput
                 style={patientDetailsStyle.inputs}
-                value={patient.email}
+                defaultValue={user.getEmail()}
+                onChangeText={(text) => user.setEmail(text)}
               ></TextInput>
             </View>
           </View>
@@ -208,7 +150,8 @@ export default function PatientDetail({ route, navigation }) {
             <View style={{ flex: 4 }}>
               <TextInput
                 style={patientDetailsStyle.inputs}
-                value={patient.date_of_birth}
+                defaultValue={user.getDOB()}
+                onChangeText={(text) => user.setDOB(text)}
               ></TextInput>
             </View>
           </View>
@@ -219,7 +162,8 @@ export default function PatientDetail({ route, navigation }) {
             <View style={{ flex: 4 }}>
               <TextInput
                 style={patientDetailsStyle.inputs}
-                value={patient.address1}
+                defaultValue={user.getAddress().getAddressLine()}
+                onChangeText={(text) => user.Address.setAddressLine(text)}
               ></TextInput>
             </View>
           </View>
@@ -231,21 +175,27 @@ export default function PatientDetail({ route, navigation }) {
             <View style={{ flex: 4 }}>
               <TextInput
                 style={patientDetailsStyle.inputs}
-                value={patient.address2}
+                defaultValue={user.getAddress().getCity()}
                 placeholderTextColor="black"
+                onChangeText={(text) => user.Address.setCity(text)}
               ></TextInput>
             </View>
           </View>
-           <View style={patientDetailsStyle.box}>
-            <View style={{ flex: 4 }}>
-              <Text style={patientDetailsStyle.field}>Seizure Type(s): </Text>
-            </View>
-            <View style={{ flex: 4 }}>
-              <TextInput
-                style={patientDetailsStyle.inputs}
-                placeholder={details.seizure_type.toString()}
-                placeholderTextColor={"black"}
-              ></TextInput>
+          <View>
+            <View style={patientDetailsStyle.box}>
+              <View style={{ flex: 4 }}>
+                <Text style={patientDetailsStyle.field}>Seizure Type(s): </Text>
+              </View>
+              <View style={{ flex: 4 }}>
+                <TextInput
+                  style={patientDetailsStyle.longInputs}
+                  defaultValue={user
+                    .getSeizureDetails()
+                    .getSeizureTypes()
+                    .toString()}
+                    onChangeText={(text) => user.getSeizureDetails().setSeizureTypes(text.split(","))}
+                ></TextInput>
+              </View>
             </View>
           </View>
           <View style={patientDetailsStyle.box}>
@@ -255,8 +205,11 @@ export default function PatientDetail({ route, navigation }) {
             <View style={{ flex: 4 }}>
               <TextInput
                 style={patientDetailsStyle.smallInputs}
-                placeholder={details.years_suffered.toString()}
-                placeholderTextColor={"black"}
+                defaultValue={user
+                  .getSeizureDetails()
+                  .getYearsSuffered()
+                  .toString()}
+                  onChangeText={(text) => user.getSeizureDetails().setYearsSuffered(text)}
               ></TextInput>
             </View>
           </View>
@@ -267,8 +220,11 @@ export default function PatientDetail({ route, navigation }) {
             <View style={{ flex: 4 }}>
               <TextInput
                 style={patientDetailsStyle.smallInputs}
-                placeholder={details.seizure_monthly_frequency.toString()}
-                placeholderTextColor={"black"}
+                defaultValue={user
+                  .getSeizureDetails()
+                  .getSeizureFreq()
+                  .toString()}
+                  onChangeText={(text) => user.getSeizureDetails().setSeizureFreq(text.split(","))}
               ></TextInput>
             </View>
           </View>
@@ -278,25 +234,34 @@ export default function PatientDetail({ route, navigation }) {
             </View>
             <View style={{ flex: 4 }}>
               <TextInput
-                style={patientDetailsStyle.inputs}
-                placeholder={details.seizure_triggers.toString()}
-                placeholderTextColor={"black"}
+                style={patientDetailsStyle.longInputs}
+                defaultValue={user
+                  .getSeizureDetails()
+                  .getSeizureTriggers()
+                  .toString()}
+                  onChangeText={(text) => user.getSeizureDetails().setSeizureTriggers(text.split(","))}
               ></TextInput>
             </View>
           </View>
           <View style={patientDetailsStyle.box}>
             <View style={{ flex: 4 }}>
-              <Text style={patientDetailsStyle.field}>Mental Health issue(s) </Text>
+              <Text style={patientDetailsStyle.field}>
+                Mental Health issue(s)
+              </Text>
             </View>
             <View style={{ flex: 4 }}>
               <TextInput
-                style={patientDetailsStyle.inputs}
-                placeholder={details.mental_health_issues.toString()}
-                placeholderTextColor={"black"}
+                style={patientDetailsStyle.longInputs}
+                defaultValue={user.getSeizureDetails().getMHIssues().toString()}
               ></TextInput>
             </View>
-          </View> 
+          </View>
         </View>
+        <Button
+          style={styles.btn}
+          title="Save Changes"
+          onPress={() => updatePatient()}
+        />
       </ScrollView>
     );
   }
@@ -304,11 +269,7 @@ export default function PatientDetail({ route, navigation }) {
   //display the page
   return (
     <>
-      <ScrollView>
-        {/* {displayNav(navigation)} */}
-        {loadPatientDetails(patient)}
-        {/* {mediaList} */}
-      </ScrollView>
+      <ScrollView>{loadPatientDetails()}</ScrollView>
     </>
   );
 }
