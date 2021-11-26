@@ -3,11 +3,12 @@ import { StatusBar } from "expo-status-bar";
 import { Patient } from "../components/Patient";
 import { Admin } from "../components/Admin";
 
-import { Text, TouchableOpacity, TextInput, View } from "react-native";
+import { Text, TouchableOpacity, TextInput, View, Button } from "react-native";
 import { Movies } from "../components/Movies";
 import { Movie } from "../components/Movie";
 import { Warnings } from "../components/Warnings";
 import { Warning } from "../components/Warning";
+import { Patients } from "../components/Patients";
 
 const commonstyles = require("./stylesheets/loginStyles");
 
@@ -37,8 +38,23 @@ function LoginScreen({ navigation }) {
           console.log("User Successfully logged in");
           console.log(user);
           console.log(user._id + " is a " + user.user_type);
-          console.log(user._id + " has a practitioner of" + user.practitioner_id);
+          // fetch analytics info
+          const analyticsInfo = new Patients();
 
+          var url = "http://192.168.0.2:4000/patients";
+          console.log(url);
+          fetch(url, {
+              method: "GET",
+          })
+          .then((response) => response.text())
+              .then((data) => {
+              var json = JSON.parse(data);
+              analyticsInfo.setPatients(json.patients);
+              })
+              .catch((error) => {
+              alert("An error occurred, please try again");
+              console.error(error);
+          });
           if (user.user_type == "Patient") {
             const details = user.patient_details;
             let patient = new Patient(
@@ -94,7 +110,7 @@ function LoginScreen({ navigation }) {
                 movies.setMovies(moviesList);
               });
             setTimeout(function () {
-              navigation.navigate("Home", { User: patient, Movies: movies });
+              navigation.navigate("Home", { User: patient, Movies: movies, Patients: analyticsInfo });
             }, 2000);
           } else {
             // LOAD PATIENTS!!!
@@ -168,7 +184,7 @@ function LoginScreen({ navigation }) {
                 patientDetailsArray
               );
               console.log("MOVIES: " + JSON.stringify(movies.getMovies()));
-              navigation.navigate("Home", { User: admin, Movies: movies });
+              navigation.navigate("Home", { User: admin, Movies: movies, Patients: analyticsInfo  });
             }, 3000);
           }
         } else {
@@ -211,6 +227,11 @@ function LoginScreen({ navigation }) {
       <TouchableOpacity style={commonstyles.loginBtn} onPress={CheckLogin}>
         <Text style={commonstyles.loginText}>LOGIN</Text>
       </TouchableOpacity>
+      <Button
+          style={commonstyles.btn}
+          title="Go to Analytics"
+          onPress={() => navigation.navigate("Analytics")}
+        />
     </View>
   );
 }

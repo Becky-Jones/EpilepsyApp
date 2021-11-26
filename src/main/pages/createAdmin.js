@@ -27,6 +27,7 @@ export default function createAdmin({ navigation, route }) {
   const params = route.params;
   const user = params.User;
   const movies = params.Movies;
+  const analyticsInfo = params.Patients;
   const [date, setDate] = useState("15-11-2021");
 
   const [S_FName, setFName] = useState("");
@@ -72,7 +73,7 @@ export default function createAdmin({ navigation, route }) {
   };
   return (
     <ScrollView>
-            {displayNav(navigation, user, movies)}
+            {displayNav(navigation, user, movies, analyticsInfo)}
       <Text style={commonstyles.text}>Practitioner Details:</Text>
       <View style={commonstyles.inlineInput}>
         <View style={{ flex: 4 }}>

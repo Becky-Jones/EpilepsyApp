@@ -47,6 +47,7 @@ export default function Home({ route, navigation }) {
   const params = route.params;
   const user = params.User;
   const movies = params.Movies;
+  const analyticsInfo = params.Patients;
   /************************
    *
    * Returned Views
@@ -166,26 +167,21 @@ export default function Home({ route, navigation }) {
 
       return (
         <View style={styles.container}>
-          <View style={{ flexDirection: "row", marginLeft: 60 }}>
+          <View style={{ flexDirection: 'row', marginLeft: 60 }}>
             <Button
               style={styles.btn}
               title="Create Patient"
-              onPress={() =>
-                navigation.navigate("Create Patient", {
-                  User: user,
-                  Movies: movies,
-                })
-              }
+              onPress={() => navigation.navigate("Create Patient", { User: user, Movies: movies, Patients: analyticsInfo })}
             />
             <Button
               style={styles.btn}
               title="Create Admin"
-              onPress={() =>
-                navigation.navigate("Create Practitioner", {
-                  User: user,
-                  Movies: movies,
-                })
-              }
+              onPress={() => navigation.navigate("Create Practitioner", { User: user, Movies: movies, Patients: analyticsInfo })}
+            />
+            <Button
+              style={styles.btn}
+              title="View Analytics"
+              onPress={() => navigation.navigate("Analytics", { User: user, Movies: movies, Patients: analyticsInfo })}
             />
           </View>
           <Text style={homeStyle.title}>Patients: </Text>
@@ -204,7 +200,7 @@ export default function Home({ route, navigation }) {
 
   return (
     <ScrollView>
-      {displayNav(navigation, user, movies)}
+      {displayNav(navigation, user, movies, analyticsInfo)}
       <View style={homeStyle.container}>
         <Text style={homeStyle.header}>Home Screen</Text>
       </View>

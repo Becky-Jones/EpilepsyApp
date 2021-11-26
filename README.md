@@ -27,6 +27,7 @@ npm install react-native-uuid
 npm install nodemon
 npm install @react-native-community/datetimepicker --save
 npm install react-native-dropdown-picker
+npm install react-native-chart-kit
 
 ### Install react native cli and expo cli
 npm install -g react-native-cli
