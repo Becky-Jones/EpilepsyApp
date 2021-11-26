@@ -10,7 +10,7 @@ import {
 
 const navStyle = require("../pages/stylesheets/navStyle");
 
-export default function displayNav(navigation, user, movies) {
+export default function displayNav(navigation, user, movies, analyticsInfo) {
 
   return (
     <View style={navStyle.container}>
@@ -19,7 +19,7 @@ export default function displayNav(navigation, user, movies) {
           // color="black"
           title="Home"
           onPress={() =>
-            navigation.navigate("Home", { User: user, Movies: movies })
+            navigation.navigate("Home", { User: user, Movies: movies, Patients: analyticsInfo })
           }
         />
       </View>
@@ -28,7 +28,7 @@ export default function displayNav(navigation, user, movies) {
           title="Media"
           // color="black"
           onPress={() =>
-            navigation.navigate("All Media", { User: user, Movies: movies })
+            navigation.navigate("All Media", { User: user, Movies: movies, Patients: analyticsInfo })
           }
         />
       </View>
