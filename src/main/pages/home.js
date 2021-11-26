@@ -158,6 +158,7 @@ export default function Home({ route, navigation }) {
                   User: user,
                   Patient: patient,
                   Movies: movies,
+                  Patients: analyticsInfo
                 });
               }}
             />
@@ -167,7 +168,7 @@ export default function Home({ route, navigation }) {
 
       return (
         <View style={styles.container}>
-          <View style={{ flexDirection: 'row', marginLeft: 60 }}>
+          <View style={{ flexDirection: 'row'}}>
             <Button
               style={styles.btn}
               title="Create Patient"
@@ -301,6 +302,7 @@ export default function Home({ route, navigation }) {
               navigation.navigate("Edit Personal Details", {
                 User: user,
                 Movies: movies,
+                Patients: analyticsInfo
               })
             }
           />

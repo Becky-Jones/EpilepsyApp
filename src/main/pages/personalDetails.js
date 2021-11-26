@@ -10,6 +10,7 @@ export default function PersonalDetails({ route, navigation }) {
   const params = route.params;
   const user = params.User;
   const movies = params.Movies;
+  const analyticsInfo = params.Patients;
   function updateUser() {
     if (user.getType() == "Patient") {
       const json = {
@@ -47,7 +48,7 @@ export default function PersonalDetails({ route, navigation }) {
           .then((response) => {
             console.log("Details successfully Updated: " + response.status);
             alert("Details Successfully Updated");
-            navigation.navigate("Home", { User: user, Movies: movies });
+            navigation.navigate("Home", { User: user, Movies: movies, Patients: analyticsInfo });
           })
           .catch((error) => {
             console.log(error);
@@ -81,7 +82,7 @@ export default function PersonalDetails({ route, navigation }) {
           .then((response) => {
             console.log("Details successfully Updated: " + response.status);
             alert("Details Successfully Updated");
-            navigation.navigate("Home", { User: user, Movies: movies });
+            navigation.navigate("Home", { User: user, Movies: movies, Patients: analyticsInfo });
           })
           .catch((error) => {
             console.log(error);

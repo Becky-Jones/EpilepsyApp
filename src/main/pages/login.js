@@ -41,7 +41,7 @@ function LoginScreen({ navigation }) {
           // fetch analytics info
           const analyticsInfo = new Patients();
 
-          var url = "http://192.168.0.2:4000/patients";
+          var url = "http://192.168.0.7:4000/patients";
           console.log(url);
           fetch(url, {
               method: "GET",
@@ -227,11 +227,6 @@ function LoginScreen({ navigation }) {
       <TouchableOpacity style={commonstyles.loginBtn} onPress={CheckLogin}>
         <Text style={commonstyles.loginText}>LOGIN</Text>
       </TouchableOpacity>
-      <Button
-          style={commonstyles.btn}
-          title="Go to Analytics"
-          onPress={() => navigation.navigate("Analytics")}
-        />
     </View>
   );
 }

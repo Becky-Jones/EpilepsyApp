@@ -137,7 +137,7 @@ export default function createPatient({ route, navigation }) {
         .then((response) => {
           console.log("User created successfully");
           alert("User created Successfully");
-          navigation.navigate("Home");
+          navigation.navigate("Home", {User: user, Movies: movies, Patients: analyticsInfo});
         })
         .catch((error) => {
           console.log(error);

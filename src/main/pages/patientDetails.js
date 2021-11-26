@@ -13,7 +13,7 @@ export default function PatientDetail({ route, navigation }) {
   const User = params.User;
   const details = patient.patient_details;
   const movies = params.Movies;
-
+  const analyticsInfo = params.Patients;
   const user = new Patient(
     patient._id,
     patient.user_type,
@@ -72,7 +72,7 @@ export default function PatientDetail({ route, navigation }) {
           .then((response) => {
             console.log("Details successfully Updated: " + response.status);
             alert("Details Successfully Updated - Changes will be reflected when you next sign in");
-            navigation.navigate("Home", { User: User, Movies: movies });
+            navigation.navigate("Home", { User: User, Movies: movies, Patients: analyticsInfo });
           })
           .catch((error) => {
             console.log(error);
