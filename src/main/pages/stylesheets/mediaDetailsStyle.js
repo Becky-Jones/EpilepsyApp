@@ -5,7 +5,13 @@ module.exports = StyleSheet.create({
     marginTop: 30,
     marginLeft:30,
     marginRight:30,
-    height:200
+    height:150
+  },
+  containerBottom: {
+    marginTop: 30,
+    marginLeft:30,
+    marginRight:30,
+    height:500
   },
   header: {
     fontSize: 30,

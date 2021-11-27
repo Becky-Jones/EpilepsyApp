@@ -29,7 +29,7 @@ export class Movie {
    * SETTERS
    *****************************/
 
-  settitle(title) {
+  setTitle(title) {
     this.title = title;
   }
 
