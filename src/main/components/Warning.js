@@ -1,21 +1,21 @@
 export class Warning {
     constructor(
-      triggerStart,
-      triggerEnd
+      start_time,
+      end_time
     ) {
-      this.triggerStart = triggerStart;
-      this.triggerEnd = triggerEnd;
+      this.start_time = start_time;
+      this.end_time = end_time;
     }
     /*****************************
      * GETTERS
      *****************************/
   
     getTriggerStart() {
-      return this.triggerStart;
+      return this.start_time;
     }
   
     getTriggerEnd() {
-      return this.triggerEnd;
+      return this.end_time;
     }
   
     /*****************************
@@ -23,11 +23,11 @@ export class Warning {
      *****************************/
   
     setTriggerStart(triggerStart) {
-      this.triggerStart = triggerStart;
+      this.start_time = triggerStart;
     }
   
     setTriggerEnd(triggerEnd) {
-      this.triggerEnd = triggerEnd;
+      this.end_time = triggerEnd;
     }
   
   
