@@ -8,6 +8,7 @@ import Home from './src/main/pages/home.js'
 import PatientDetails from './src/main/pages/patientDetails.js'
 import MediaDetails from './src/main/pages/mediaDetails.js'
 import AllMedia from './src/main/pages/allMedia.js'
+import EditMedia from './src/main/pages/editMedia.js'
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -26,6 +27,7 @@ export default function App() {
       <Stack.Screen name="Patient Details" component={PatientDetails} />
       <Stack.Screen name="Media Details" component={MediaDetails} />
       <Stack.Screen name="All Media" component={AllMedia} />
+      <Stack.Screen name="Edit Media" component={EditMedia} />
     </Stack.Navigator>
   </NavigationContainer>
   );

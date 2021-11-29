@@ -111,7 +111,11 @@ export default function MediaDetails({ navigation, route }) {
     newMovie.setTitle(mediaName);
     newMovie.setLength(mediaLength);
     newMovie.setWarnings(warnings);
-
+    console.log("Adding " + JSON.stringify({
+      title: newMovie.getTitle(),
+      length: newMovie.getLength(),
+      warnings: warnings,
+    }));
     fetch("http://192.168.0.7:4000/add-movie", {
       method: "POST",
       headers: {
@@ -173,7 +177,7 @@ export default function MediaDetails({ navigation, route }) {
     for (var x = 0; x < films.length; x++) {
       const warning = films[x].warnings;
       const movieId = films[x]._id;
-      // console.log(warning);
+      const theMovie = films[x];
       mediaDetailsFormattedForTable.push({
         mediaName: films[x].title,
         movieLength: films[x].length,
@@ -190,6 +194,11 @@ export default function MediaDetails({ navigation, route }) {
           />
         ),
         remove: <Button title="Remove" onPress={() => RemoveMedia(movieId)} />,
+        edit: <Button title="Edit" onPress={() => navigation.navigate("Edit Media", {
+           User: user,
+                Movies: movies,
+          Movie: theMovie,
+        })}/>
       });
     }
     return mediaDetailsFormattedForTable;
@@ -217,6 +226,11 @@ export default function MediaDetails({ navigation, route }) {
         dataIndex: "remove",
         width: 90,
       },
+      {
+        title: "Edit Movie",
+        dataIndex: "edit",
+        width: 80
+      }
     ];
   }
 
