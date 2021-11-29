@@ -6,14 +6,14 @@ import { Patient } from "../components/Patient";
 //pull in common stylesheet and stylesheet for this page
 const styles = require("./stylesheets/styles");
 const patientDetailsStyle = require("./stylesheets/patientDetailsStyle");
-
+ 
 export default function PatientDetail({ route, navigation }) {
   const params = route.params;
   const patient = params.Patient;
   const User = params.User;
-  const details = patient.patient_details;
   const movies = params.Movies;
   const analyticsInfo = params.Patients;
+  const details = patient.patient_details;
   const user = new Patient(
     patient._id,
     patient.user_type,
@@ -59,7 +59,7 @@ export default function PatientDetail({ route, navigation }) {
       };
       console.log(JSON.stringify(json));
       if (inputsValid) {
-        var url = "http://192.168.0.7:4000/edit-user/" + user.getId();
+        var url = "http://172.20.10.5:4000/edit-user/" + user.getId();
         console.log(url);
         fetch(url, {
           method: "PUT",
@@ -78,6 +78,26 @@ export default function PatientDetail({ route, navigation }) {
             console.log(error);
           });
       }
+    }
+
+    function removePatient() {
+      console.log("Removing " + patient._id);
+      var url = "http://172.20.10.5:4000/delete-user/" + patient._id;
+      url;
+      fetch(url, { method: "DELETE" })
+        .then((response) => {
+          console.log("User removed successfully");
+          alert(
+            "Patient removed, please log out to refresh patient list."
+          );
+          navigation.navigate("Home", { User: User, Movies: movies, Patients: analyticsInfo });
+        })
+        .catch((error) => {
+          console.log(error);
+          alert(
+            "Sorry. We couldn't remove the selected user at this time. Please try again later."
+          );
+        });
     }
 
     return (
@@ -261,6 +281,11 @@ export default function PatientDetail({ route, navigation }) {
           style={styles.btn}
           title="Save Changes"
           onPress={() => updatePatient()}
+        />
+        <Button
+          style={styles.btn}
+          title="Remove Patient"
+          onPress={() => removePatient()}
         />
       </ScrollView>
     );
