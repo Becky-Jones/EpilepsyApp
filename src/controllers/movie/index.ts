@@ -41,7 +41,7 @@ const updateMovie = async (req: Request, res: Response): Promise<void> => {
         body,
       } = req
       const updateMovie: IMovie | null = await Movie.findByIdAndUpdate(
-        { title: id },
+        { _id: id },
         body
       )
       const allMovies: IMovie[] = await Movie.find()
