@@ -41,20 +41,21 @@ const personalDetailsCol = [
 
 /************************
  * Home Function
- *************************/ 
+ *************************/
 
 export default function Home({ route, navigation }) {
   const params = route.params;
   const user = params.User;
   const movies = params.Movies;
+  const analyticsInfo = params.Patients;
   /************************
    *
    * Returned Views
    *
    *************************/
 
-  const loadSeizureDetailsView = () => {  
-    if (user.getType() == "Patient") { 
+  const loadSeizureDetailsView = () => {
+    if (user.getType() == "Patient") {
       return (
         <View style={styles.container}>
           <Text style={homeStyle.title}>Seizure Details: </Text>
@@ -99,7 +100,7 @@ export default function Home({ route, navigation }) {
                   .getSeizureDetails()
                   .getSeizureFreq()
                   .toString()}
-                placeholderTextColor={"black"} 
+                placeholderTextColor={"black"}
               ></TextInput>
             </View>
           </View>
@@ -125,7 +126,10 @@ export default function Home({ route, navigation }) {
             <View style={{ flex: 4 }}>
               <TextInput
                 style={homeStyle.inputs}
-                placeholder={user.getSeizureDetails().getMHIssues().toString()}
+                placeholder={user
+                .getSeizureDetails()
+                .getMHIssues()
+                .toString()}
                 placeholderTextColor={"black"}
               ></TextInput>
             </View>
@@ -140,7 +144,7 @@ export default function Home({ route, navigation }) {
     if (user.getType() == "Admin") {
       const patientsList = user.getPatients();
 
-      for (var i = 0; i <patientsList.length; i++) { 
+      for (var i = 0; i < patientsList.length; i++) {
         const detail = patientsList[i];
         const patient = detail.user;
         patientDetailsArray.push({
@@ -150,7 +154,12 @@ export default function Home({ route, navigation }) {
             <Button
               title="View"
               onPress={() => {
-                navigation.navigate("Patient Details", { User: user, Patient: patient, Movies: movies });
+                navigation.navigate("Patient Details", {
+                  User: user,
+                  Patient: patient,
+                  Movies: movies,
+                  Patients: analyticsInfo
+                });
               }}
             />
           ),
@@ -159,17 +168,22 @@ export default function Home({ route, navigation }) {
 
       return (
         <View style={styles.container}>
-          <View style={{flexDirection: 'row', marginLeft: 60}}>
-          <Button
-            style={styles.btn}
-            title="Create Patient"
-            onPress={() => navigation.navigate("Create Patient", {User: user, Movies:movies})}
-          />
-          <Button
-            style={styles.btn}
-            title="Create Admin"
-            onPress={() => navigation.navigate("Create Practitioner", {User: user, Movies: movies})}
-          />
+          <View style={{ flexDirection: 'row'}}>
+            <Button
+              style={styles.btn}
+              title="Create Patient"
+              onPress={() => navigation.navigate("Create Patient", { User: user, Movies: movies, Patients: analyticsInfo })}
+            />
+            <Button
+              style={styles.btn}
+              title="Create Admin"
+              onPress={() => navigation.navigate("Create Practitioner", { User: user, Movies: movies, Patients: analyticsInfo })}
+            />
+            <Button
+              style={styles.btn}
+              title="View Analytics"
+              onPress={() => navigation.navigate("Analytics", { User: user, Movies: movies, Patients: analyticsInfo })}
+            />
           </View>
           <Text style={homeStyle.title}>Patients: </Text>
           <View style={homeStyle.table}>
@@ -180,7 +194,6 @@ export default function Home({ route, navigation }) {
               dataSource={patientDetailsArray}
             />
           </View>
-          
         </View>
       );
     }
@@ -188,7 +201,7 @@ export default function Home({ route, navigation }) {
 
   return (
     <ScrollView>
-    {displayNav(navigation, user, movies)}
+      {displayNav(navigation, user, movies, analyticsInfo)}
       <View style={homeStyle.container}>
         <Text style={homeStyle.header}>Home Screen</Text>
       </View>
@@ -197,7 +210,7 @@ export default function Home({ route, navigation }) {
 
         <View style={homeStyle.box}>
           <View style={{ flex: 4 }}>
-            <Text style={homeStyle.field}>First Name: </Text> 
+            <Text style={homeStyle.field}>First Name: </Text>
           </View>
           <View style={{ flex: 4 }}>
             <TextInput
@@ -211,7 +224,7 @@ export default function Home({ route, navigation }) {
           <View style={{ flex: 4 }}>
             <TextInput
               style={homeStyle.smallInputs}
-              value={user.getSurname()} 
+              value={user.getSurname()}
             ></TextInput>
           </View>
         </View>
@@ -260,7 +273,7 @@ export default function Home({ route, navigation }) {
         </View>
         <View style={homeStyle.box}>
           <View style={{ flex: 4 }}>
-            <Text style={homeStyle.field}>Address: </Text> 
+            <Text style={homeStyle.field}>Address: </Text>
           </View>
           <View style={{ flex: 4 }}>
             <TextInput
@@ -271,24 +284,32 @@ export default function Home({ route, navigation }) {
         </View>
 
         <View style={homeStyle.box}>
-          <View style={{ flex: 4 }}> 
+          <View style={{ flex: 4 }}>
             <Text style={homeStyle.field}>City: </Text>
           </View>
           <View style={{ flex: 4 }}>
             <TextInput
-              style={homeStyle.inputs} 
+              style={homeStyle.inputs}
               value={user.getAddress().getCity()}
               placeholderTextColor="black"
             ></TextInput>
           </View>
         </View>
+        <View style={styles.btn}>
+          <Button
+            title="Edit Personal Details"
+            onPress={() =>
+              navigation.navigate("Edit Personal Details", {
+                User: user,
+                Movies: movies,
+                Patients: analyticsInfo
+              })
+            }
+          />
+        </View>
         {loadSeizureDetailsView()}
       </View>
-      <View style={styles.btn}>
-        {/* <TouchableOpacity style={styles.btn}>
-            <Text>Save Changes</Text>
-          </TouchableOpacity> */}
-      </View>
+
       {loadAdminView()}
     </ScrollView>
   );

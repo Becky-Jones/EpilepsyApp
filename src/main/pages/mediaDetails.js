@@ -11,7 +11,8 @@ export default function MediaDetails({ route, navigation }) {
   const user = params.User;
   const movies = params.Movies;
   const Warnings = params.Warnings;
-  //console.log(Warnings);
+  const analyticsInfo = params.Patients;
+
   const columnsMediaTable = setupTable();
   var dataSourceMediaTable = getMediaDetails(Warnings);
   //console.log(dataSourceMediaTable);
@@ -19,7 +20,7 @@ export default function MediaDetails({ route, navigation }) {
 
   return (
     <>
-      {displayNav(navigation, user, movies)}
+      {displayNav(navigation, user, movies, analyticsInfo)}
       <View style={styles.container}>
         {displayTable(columnsMediaTable, dataSourceMediaTable)}
       </View>

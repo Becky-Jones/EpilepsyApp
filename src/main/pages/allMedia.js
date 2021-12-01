@@ -31,13 +31,15 @@ export default function MediaDetails({ navigation, route }) {
   const params = route.params;
   const user = params.User;
   const movies = params.Movies;
+  const analyticsInfo = params.Patients;
 
   const columnsMediaTable = setupTable();
   const mediaDetailsFormattedForTable = formatMediaDetails(
     movies,
     navigation,
     user,
-    movies
+    movies,
+    analyticsInfo
   );
 
   function displayAddMedia(
@@ -90,6 +92,27 @@ export default function MediaDetails({ navigation, route }) {
         <Button
           title="Add Media to database"
           onPress={() => AddMedia(S_MediaName, S_MediaLength, warninglist)}
+
+          //this function fixes a weird problem where array is created within an array
+function formatMediaDetails(dataSourceMediaTable, navigation, user, movies, analyticsInfo) {
+  const mediaDetailsFormattedForTable = [];
+  const films = dataSourceMediaTable.movies;
+  for (var x = 0; x < films.length; x++) {
+    const warning = films[x].warnings.warningsList;
+    mediaDetailsFormattedForTable.push({
+      mediaName: films[x].title,
+      movieLength: films[x].length,
+      linky: (
+        <Button
+          title="Link"
+          onPress={() =>
+            navigation.navigate("Media Details", {
+              User: user,
+              Movies: movies,
+              Paients: analyticsInfo,
+              Warnings: warning,
+            })
+          }
         />
       </>
     );

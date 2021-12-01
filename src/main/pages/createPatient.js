@@ -36,6 +36,8 @@ export default function createPatient({ route, navigation }) {
   const params = route.params;
   const user = params.User;
   const movies = params.Movies;
+  const analyticsInfo = params.Patients;
+
   const [typelist, settypeList] = useState([]);
   const [date, setDate] = useState("15-11-2021");
 
@@ -135,7 +137,7 @@ export default function createPatient({ route, navigation }) {
         .then((response) => {
           console.log("User created successfully");
           alert("User created Successfully");
-          navigation.navigate("Home");
+          navigation.navigate("Home", {User: user, Movies: movies, Patients: analyticsInfo});
         })
         .catch((error) => {
           console.log(error);
@@ -166,7 +168,7 @@ export default function createPatient({ route, navigation }) {
 
   return (
     <ScrollView>
-      {displayNav(navigation, user, movies)}
+      {displayNav(navigation, user, movies, analyticsInfo)}
       <Text style={commonstyles.text}>Patient Details:</Text>
       <View style={commonstyles.inlineInput}>
         <View style={{ flex: 4 }}>

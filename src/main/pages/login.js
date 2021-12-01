@@ -3,65 +3,18 @@ import { StatusBar } from "expo-status-bar";
 import { Patient } from "../components/Patient";
 import { Admin } from "../components/Admin";
 
-import { Text, TouchableOpacity, TextInput, View } from "react-native";
+import { Text, TouchableOpacity, TextInput, View, Button } from "react-native";
 import { Movies } from "../components/Movies";
 import { Movie } from "../components/Movie";
 import { Warnings } from "../components/Warnings";
 import { Warning } from "../components/Warning";
+import { Patients } from "../components/Patients";
 
 const commonstyles = require("./stylesheets/loginStyles");
 
 function LoginScreen({ navigation }) {
   const [S_Email, setEmail] = useState("");
   const [S_Password, setPassword] = useState("");
-
-  const LoadMovies = () => {
-    fetch("http://192.168.0.7:4000/movies", {
-      method: "GET",
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        console.log("GETS MOVIES!!");
-        var json = JSON.parse(data);
-        const moviesArray = json.movies;
-        const moviesList = [];
-        for (var i = 0; i < moviesArray.length; i++) {
-          const movie = new Movie(
-            moviesArray[i]._id,
-            moviesArray[i].title,
-            moviesArray[i].warnings,
-            moviesArray[i].length
-          );
-          moviesList.push(movie);
-        }
-        let movies = new Movies(moviesList);
-        return movies;
-      });
-  };
-
-  const loadPatients = (adminId) => {
-    const patientDetailsArray = [];
-    var url = "http://192.168.0.7:4000/my-patients/" + adminId;
-    console.log(url);
-    fetch(url, {
-      method: "GET",
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        var json = JSON.parse(data);
-        const myArray = json.myPatients;
-        for (var i = 0; i < myArray.length; i++) {
-          const userId = myArray[i]._id;
-          patientDetailsArray.push({
-            user: myArray[i],
-            name: myArray[i].first_name + " " + myArray[i].surname,
-            DOB: myArray[i].date_of_birth,
-            id: userId,
-          });
-        }
-        return patientDetailsArray;
-      });
-  };
 
   const CheckLogin = () => {
     var url = "http://192.168.0.7:4000/user/" + S_Email;
@@ -85,7 +38,23 @@ function LoginScreen({ navigation }) {
           console.log("User Successfully logged in");
           console.log(user);
           console.log(user._id + " is a " + user.user_type);
+          // fetch analytics info
+          const analyticsInfo = new Patients();
 
+          var url = "http://192.168.0.7:4000/patients";
+          console.log(url);
+          fetch(url, {
+              method: "GET",
+          })
+          .then((response) => response.text())
+              .then((data) => {
+              var json = JSON.parse(data);
+              analyticsInfo.setPatients(json.patients);
+              })
+              .catch((error) => {
+              alert("An error occurred, please try again");
+              console.error(error);
+          });
           if (user.user_type == "Patient") {
             const details = user.patient_details;
             let patient = new Patient(
@@ -100,6 +69,7 @@ function LoginScreen({ navigation }) {
               user.address1,
               user.address2,
               user.postcode,
+              details.practitioner_id,
               details.seizure_triggers,
               details.seizure_type,
               details.seizure_monthly_frequency,
@@ -107,7 +77,6 @@ function LoginScreen({ navigation }) {
               details.mental_health_issues
             );
 
-            // const movies = LoadMovies();
             // LOAD MOVIES!!
             const movies = new Movies();
             fetch("http://192.168.0.7:4000/movies", {
@@ -141,7 +110,7 @@ function LoginScreen({ navigation }) {
                 movies.setMovies(moviesList);
               });
             setTimeout(function () {
-              navigation.navigate("Home", { User: patient, Movies: movies });
+              navigation.navigate("Home", { User: patient, Movies: movies, Patients: analyticsInfo });
             }, 2000);
           } else {
             // LOAD PATIENTS!!!
@@ -215,7 +184,7 @@ function LoginScreen({ navigation }) {
                 patientDetailsArray
               );
               console.log("MOVIES: " + JSON.stringify(movies.getMovies()));
-              navigation.navigate("Home", { User: admin, Movies: movies });
+              navigation.navigate("Home", { User: admin, Movies: movies, Patients: analyticsInfo  });
             }, 3000);
           }
         } else {
