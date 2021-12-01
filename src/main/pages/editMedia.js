@@ -27,6 +27,7 @@ export default function EditMediaDetails({ navigation, route }) {
   const movie = params.Movie;
   const movies = params.Movies;
   const user = params.User;
+  const analyticsInfo = params.Patients;
 
   const [S_MediaName, setMediaName] = useState(movie.title);
   const [S_MediaLength, setMediaLength] = useState(movie.length);
@@ -177,9 +178,9 @@ export default function EditMediaDetails({ navigation, route }) {
       },
       body: JSON.stringify(json), 
     })
-      .then((response) => {
+      .then((response) => { 
         console.log("Movie updated successfully");
-        navigation.navigate("All Media", {User: user, Movies: movies});
+        navigation.navigate("All Media", {User: user, Movies: movies, Patients: analyticsInfo});
       })
       .catch((error) => {
         console.log(error);

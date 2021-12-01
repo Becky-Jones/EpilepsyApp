@@ -51,7 +51,7 @@ export default function MediaDetails({ navigation, route }) {
     const addWarningItem = (text) => {
       const newWarningItem = {
         warning: text,
-        id: uuid.v4()
+        id: uuid.v4(),
       };
       setWarningList([newWarningItem, ...warninglist]);
     };
@@ -92,32 +92,41 @@ export default function MediaDetails({ navigation, route }) {
         <Button
           title="Add Media to database"
           onPress={() => AddMedia(S_MediaName, S_MediaLength, warninglist)}
-
-          //this function fixes a weird problem where array is created within an array
-function formatMediaDetails(dataSourceMediaTable, navigation, user, movies, analyticsInfo) {
-  const mediaDetailsFormattedForTable = [];
-  const films = dataSourceMediaTable.movies;
-  for (var x = 0; x < films.length; x++) {
-    const warning = films[x].warnings.warningsList;
-    mediaDetailsFormattedForTable.push({
-      mediaName: films[x].title,
-      movieLength: films[x].length,
-      linky: (
-        <Button
-          title="Link"
-          onPress={() =>
-            navigation.navigate("Media Details", {
-              User: user,
-              Movies: movies,
-              Paients: analyticsInfo,
-              Warnings: warning,
-            })
-          }
         />
       </>
     );
   }
-
+  //this function fixes a weird problem where array is created within an array
+  function formatMediaDetails(
+    dataSourceMediaTable,
+    navigation,
+    user,
+    movies,
+    analyticsInfo
+  ) {
+    const mediaDetailsFormattedForTable = [];
+    const films = dataSourceMediaTable.movies;
+    for (var x = 0; x < films.length; x++) {
+      const warning = films[x].warnings.warningsList;
+      mediaDetailsFormattedForTable.push({
+        mediaName: films[x].title,
+        movieLength: films[x].length,
+        linky: (
+          <Button
+            title="Link"
+            onPress={() =>
+              navigation.navigate("Media Details", {
+                User: user,
+                Movies: movies,
+                Paients: analyticsInfo,
+                Warnings: warning,
+              })
+            }
+          />
+        ),
+      });
+    }
+  }
   function AddMedia(mediaName, mediaLength, warninglist) {
     var newMovie = new Movie();
     var warnings = [];
@@ -135,11 +144,14 @@ function formatMediaDetails(dataSourceMediaTable, navigation, user, movies, anal
     newMovie.setTitle(mediaName);
     newMovie.setLength(mediaLength);
     newMovie.setWarnings(warnings);
-    console.log("Adding " + JSON.stringify({
-      title: newMovie.getTitle(),
-      length: newMovie.getLength(),
-      warnings: warnings,
-    }));
+    console.log(
+      "Adding " +
+        JSON.stringify({
+          title: newMovie.getTitle(),
+          length: newMovie.getLength(),
+          warnings: warnings,
+        })
+    );
     fetch("http://192.168.0.7:4000/add-movie", {
       method: "POST",
       headers: {
@@ -155,7 +167,11 @@ function formatMediaDetails(dataSourceMediaTable, navigation, user, movies, anal
       .then((response) => {
         console.log("Movie added successfully");
         alert("Movie Added Successfully - Will be displayed on next login");
-        navigation.navigate("Home", {User: user, Movies: movies});
+        navigation.navigate("Home", {
+          User: user,
+          Movies: movies,
+          Patients: analyticsInfo,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -173,7 +189,11 @@ function formatMediaDetails(dataSourceMediaTable, navigation, user, movies, anal
       .then((response) => {
         console.log("Movie removed successfully");
         alert("Movie Removed Successfully - Will be reflected on next log in");
-        navigation.navigate("Home", {User: user, Movies: movies});
+        navigation.navigate("Home", {
+          User: user,
+          Movies: movies,
+          Patients: analyticsInfo,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -216,16 +236,25 @@ function formatMediaDetails(dataSourceMediaTable, navigation, user, movies, anal
                 User: user,
                 Movies: movies,
                 Warnings: warning,
+                Patients: analyticsInfo,
               })
             }
           />
         ),
         remove: <Button title="Remove" onPress={() => RemoveMedia(movieId)} />,
-        edit: <Button title="Edit" onPress={() => navigation.navigate("Edit Media", {
-           User: user,
+        edit: (
+          <Button
+            title="Edit"
+            onPress={() =>
+              navigation.navigate("Edit Media", {
+                User: user,
                 Movies: movies,
-          Movie: theMovie,
-        })}/>
+                Movie: theMovie,
+                Patients: analyticsInfo,
+              })
+            }
+          />
+        ),
       });
     }
     return mediaDetailsFormattedForTable;
@@ -256,8 +285,8 @@ function formatMediaDetails(dataSourceMediaTable, navigation, user, movies, anal
       {
         title: "Edit Movie",
         dataIndex: "edit",
-        width: 80
-      }
+        width: 80,
+      },
     ];
   }
 
@@ -265,22 +294,22 @@ function formatMediaDetails(dataSourceMediaTable, navigation, user, movies, anal
     <>
       <ScrollView>
         {displayNav(navigation, user, movies)}
-          <Text style={mediaDetailsStyle.title}>Media Details</Text>
-          {displayMediaTable(columnsMediaTable, mediaDetailsFormattedForTable)}
+        <Text style={mediaDetailsStyle.title}>Media Details</Text>
+        {displayMediaTable(columnsMediaTable, mediaDetailsFormattedForTable)}
 
-          <Text style={mediaDetailsStyle.title}>Add movie</Text>
-            {displayAddMedia(
-              S_AddMediaName,
-              setMediaName,
-              S_MediaLength,
-              setMediaLength,
-              S_TriggerStart,
-              setTriggerStart,
-              S_TriggerEnd,
-              setTriggerEnd,
-              S_Warnings,
-              setWarnings
-            )}
+        <Text style={mediaDetailsStyle.title}>Add movie</Text>
+        {displayAddMedia(
+          S_AddMediaName,
+          setMediaName,
+          S_MediaLength,
+          setMediaLength,
+          S_TriggerStart,
+          setTriggerStart,
+          S_TriggerEnd,
+          setTriggerEnd,
+          S_Warnings,
+          setWarnings
+        )}
       </ScrollView>
     </>
   );

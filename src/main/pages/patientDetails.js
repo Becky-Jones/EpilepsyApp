@@ -82,7 +82,7 @@ export default function PatientDetail({ route, navigation }) {
 
     function removePatient() {
       console.log("Removing " + patient._id);
-      var url = "http://172.20.10.5:4000/delete-user/" + patient._id;
+      var url = "http://192.168.0.7:4000/delete-user/" + patient._id;
       url;
       fetch(url, { method: "DELETE" })
         .then((response) => {
