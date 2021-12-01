@@ -54,11 +54,11 @@ function setupTable() {
 
 function getMediaDetails(warnings) {
   const output = [];
-  for (var x = 0; x < warnings.length; x++) {
+  for (var x = 0; x < warnings.warningsList.length; x++) {
     //console.log(warnings[x].start_time);
     output.push({
-      triggerStart: warnings[x].start_time,
-      triggerEnd: warnings[x].end_time,
+      triggerStart: warnings.warningsList[x].start_time,
+      triggerEnd: warnings.warningsList[x].end_time,
     });
   }
   return [output];

@@ -57,7 +57,7 @@ export default function EditMediaDetails({ navigation, route }) {
     <>
       <ScrollView>
         {displayNav(navigation, user, movies)}
-        <View style={mediaDetailsStyle.container}>
+        <View>
           <Text style={mediaDetailsStyle.title}>Edit Media</Text>
           <Button
             title="Load trigger times"
@@ -70,15 +70,19 @@ export default function EditMediaDetails({ navigation, route }) {
   );
 
   function setupWarningList() {
-    //console.log(moviee.warnings);
+    // console.log(moviee.warnings);
+    console.log(JSON.stringify(movie));
     var warningList1 = [];
-    for (var x = 0; x < movie.warnings.length; x++) {
+    for (var x = 0; x < movie.warnings.warningsList.length; x++) {
+      // console.log("GETS HERE" + JSON.stringify(movie.warnings.warningsList[0]));
+      var m = movie.warnings.warningsList[x];
       var warnings =
-        movie.warnings[x].start_time + " " + movie.warnings[x].end_time;
+       m.start_time + " " + m.end_time;
       warningList1.push(warnings);
       //console.log(warnings);
       //call addWarningItemList instead
     }
+    console.log(JSON.stringify(warningList1));
     addWarningItemList(warningList1);
 
     // displayTriggers();
@@ -111,7 +115,7 @@ export default function EditMediaDetails({ navigation, route }) {
         </View>
         <Button
           title="Update Media"
-          onPress={() => pushToDB(S_MediaName, S_MediaLength, warninglist)}
+          onPress={() => pushToDB(movie.id, S_MediaName, S_MediaLength, warninglist)}
         />
       </View>
     );
@@ -130,7 +134,7 @@ export default function EditMediaDetails({ navigation, route }) {
     );
   }
 
-  function pushToDB(mediaName, mediaLength, warninglist) {
+  function pushToDB(id, mediaName, mediaLength, warninglist) {
     var newMovie = new Movie();
     var warnings = [];
 
@@ -145,9 +149,12 @@ export default function EditMediaDetails({ navigation, route }) {
 
     //assign all the details to the new film
     newMovie.setTitle(mediaName);
+    newMovie.setId(id);
     newMovie.setLength(mediaLength);
     newMovie.setWarnings(warnings);
-    console.log("http://192.168.0.7:4000/edit-movie/" + movie._id);
+    var url = "http://192.168.0.7:4000/edit-movie/" + newMovie.getId();
+    console.log(url);
+
     console.log(
       "Adding " +
         JSON.stringify({
@@ -156,21 +163,23 @@ export default function EditMediaDetails({ navigation, route }) {
           warnings: warnings,
         })
     );
-    fetch("http://192.168.0.7:4000/edit-movie/" + movie._id, {
+
+    var json = {
+      title: newMovie.getTitle(),
+      length: newMovie.getLength(),
+      warnings: warnings,
+    };
+    fetch(url, {
       method: "PUT",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json", 
       },
-      body: JSON.stringify({
-        title: newMovie.getTitle(),
-        length: newMovie.getLength(),
-        warnings: warnings,
-      }),
+      body: JSON.stringify(json), 
     })
       .then((response) => {
-        console.log("Movie added successfully");
-        navigation.navigate("All Media");
+        console.log("Movie updated successfully");
+        navigation.navigate("All Media", {User: user, Movies: movies});
       })
       .catch((error) => {
         console.log(error);

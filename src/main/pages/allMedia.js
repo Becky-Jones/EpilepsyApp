@@ -31,6 +31,7 @@ export default function MediaDetails({ navigation, route }) {
   const params = route.params;
   const user = params.User;
   const movies = params.Movies;
+
   const columnsMediaTable = setupTable();
   const mediaDetailsFormattedForTable = formatMediaDetails(
     movies,
@@ -130,7 +131,8 @@ export default function MediaDetails({ navigation, route }) {
     })
       .then((response) => {
         console.log("Movie added successfully");
-        navigation.navigate("All Media");
+        alert("Movie Added Successfully - Will be displayed on next login");
+        navigation.navigate("Home", {User: user, Movies: movies});
       })
       .catch((error) => {
         console.log(error);
@@ -147,7 +149,8 @@ export default function MediaDetails({ navigation, route }) {
     fetch(url, { method: "DELETE" })
       .then((response) => {
         console.log("Movie removed successfully");
-        navigation.navigate("All Media");
+        alert("Movie Removed Successfully - Will be reflected on next log in");
+        navigation.navigate("Home", {User: user, Movies: movies});
       })
       .catch((error) => {
         console.log(error);
@@ -161,7 +164,7 @@ export default function MediaDetails({ navigation, route }) {
     return (
       <View style={mediaDetailsStyle.table}>
         <Table
-          height={420}
+          height={250}
           columnWidth={150}
           columns={columnsMediaTable}
           dataSource={mediaDetailsFormattedForTable}
@@ -174,9 +177,10 @@ export default function MediaDetails({ navigation, route }) {
   function formatMediaDetails(dataSourceMediaTable, navigation, user, movies) {
     const mediaDetailsFormattedForTable = [];
     const films = dataSourceMediaTable.movies;
+
     for (var x = 0; x < films.length; x++) {
       const warning = films[x].warnings;
-      const movieId = films[x]._id;
+      const movieId = films[x].id;
       const theMovie = films[x];
       mediaDetailsFormattedForTable.push({
         mediaName: films[x].title,
@@ -214,7 +218,7 @@ export default function MediaDetails({ navigation, route }) {
       {
         title: "Movie Length",
         dataIndex: "movieLength",
-        width: 80,
+        width: 60,
       },
       {
         title: "Link",
@@ -222,9 +226,9 @@ export default function MediaDetails({ navigation, route }) {
         width: 70,
       },
       {
-        title: "Remove Movie",
+        title: "Remove",
         dataIndex: "remove",
-        width: 90,
+        width: 70,
       },
       {
         title: "Edit Movie",
@@ -238,14 +242,10 @@ export default function MediaDetails({ navigation, route }) {
     <>
       <ScrollView>
         {displayNav(navigation, user, movies)}
-        <View style={mediaDetailsStyle.container}>
           <Text style={mediaDetailsStyle.title}>Media Details</Text>
           {displayMediaTable(columnsMediaTable, mediaDetailsFormattedForTable)}
-        </View>
 
-        <View style={mediaDetailsStyle.containerBottom}>
           <Text style={mediaDetailsStyle.title}>Add movie</Text>
-          <ScrollView>
             {displayAddMedia(
               S_AddMediaName,
               setMediaName,
@@ -258,8 +258,6 @@ export default function MediaDetails({ navigation, route }) {
               S_Warnings,
               setWarnings
             )}
-          </ScrollView>
-        </View>
       </ScrollView>
     </>
   );
