@@ -79,7 +79,6 @@ function LoginScreen({ navigation }) {
 
             // LOAD MOVIES!!
             const movies = new Movies();
-            var warningsList = [];
             fetch("http://192.168.0.7:4000/movies", {
               method: "GET",
             })
@@ -89,6 +88,7 @@ function LoginScreen({ navigation }) {
                 const moviesList = [];
                 const moviesArray = json.movies;
                 for (var i = 0; i < moviesArray.length; i++) {
+                  var warningsList = [];
                   const details = moviesArray[i];
                   const warningsArray = moviesArray[i].warnings;
                   for (var x = 0; x < warningsArray.length; x++) {
@@ -137,7 +137,6 @@ function LoginScreen({ navigation }) {
 
             // LOAD MOVIES!!
             const movies = new Movies();
-            var warningsList = [];
             fetch("http://192.168.0.7:4000/movies", {
               method: "GET",
             })
@@ -147,6 +146,7 @@ function LoginScreen({ navigation }) {
                 const moviesList = [];
                 const moviesArray = json.movies;
                 for (var i = 0; i < moviesArray.length; i++) {
+                  var warningsList = [];
                   const details = moviesArray[i];
                   const warningsArray = moviesArray[i].warnings;
                   for (var x = 0; x < warningsArray.length; x++) {

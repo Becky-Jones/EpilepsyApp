@@ -2,10 +2,16 @@ import { StyleSheet } from 'react-native';
 
 module.exports = StyleSheet.create({
   container: {
-    backgroundColor: "yellow",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 0,
+    marginTop: 30,
+    marginLeft:30,
+    marginRight:30,
+    height:150
+  },
+  containerBottom: {
+    marginTop: 30,
+    marginLeft:30,
+    marginRight:30,
+    height:500
   },
   header: {
     fontSize: 30,
@@ -19,6 +25,11 @@ module.exports = StyleSheet.create({
     marginLeft: 100
   },
   table: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  btn:{
+    flex: 4,
     alignItems: "center",
     justifyContent: "center",
   }

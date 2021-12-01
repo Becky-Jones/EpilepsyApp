@@ -15,6 +15,7 @@ export default function MediaDetails({ route, navigation }) {
 
   const columnsMediaTable = setupTable();
   var dataSourceMediaTable = getMediaDetails(Warnings);
+  //console.log(dataSourceMediaTable);
   dataSourceMediaTable = dataSourceMediaTable[0];
 
   return (
@@ -54,10 +55,11 @@ function setupTable() {
 
 function getMediaDetails(warnings) {
   const output = [];
-  for (var x = 0; x < warnings.length; x++) {
+  for (var x = 0; x < warnings.warningsList.length; x++) {
+    //console.log(warnings[x].start_time);
     output.push({
-      triggerStart: warnings[x].triggerStart,
-      triggerEnd: warnings[x].triggerEnd,
+      triggerStart: warnings.warningsList[x].start_time,
+      triggerEnd: warnings.warningsList[x].end_time,
     });
   }
   return [output];

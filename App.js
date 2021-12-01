@@ -11,6 +11,7 @@ import MediaDetails from './src/main/pages/mediaDetails.js'
 import Analytics from './src/main/pages/analytics.js'
 
 import AllMedia from './src/main/pages/allMedia.js'
+import EditMedia from './src/main/pages/editMedia.js'
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -30,6 +31,7 @@ export default function App() {
       <Stack.Screen name="Media Details" component={MediaDetails} />
       <Stack.Screen name="Analytics" component={Analytics} />
       <Stack.Screen name="All Media" component={AllMedia} />
+      <Stack.Screen name="Edit Media" component={EditMedia} />
       <Stack.Screen name="Edit Personal Details" component={PersonalDetails} />
     </Stack.Navigator>
   </NavigationContainer>
