@@ -59,7 +59,7 @@ export default function PatientDetail({ route, navigation }) {
       };
       console.log(JSON.stringify(json));
       if (inputsValid) {
-        var url = "http://172.20.10.5:4000/edit-user/" + user.getId();
+        var url = "http://192.168.0.7:4000/edit-user/" + user.getId();
         console.log(url);
         fetch(url, {
           method: "PUT",
@@ -273,6 +273,7 @@ export default function PatientDetail({ route, navigation }) {
               <TextInput
                 style={patientDetailsStyle.longInputs}
                 defaultValue={user.getSeizureDetails().getMHIssues().toString()}
+                onChangeText={(text) => user.getSeizureDetails().setMHIssues(text.split(","))}
               ></TextInput>
             </View>
           </View>
