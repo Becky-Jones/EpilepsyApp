@@ -1,0 +1,862 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PatientDetail /> renders correctly for given patient 1`] = `
+<RCTScrollView
+  collapsable={false}
+  onGestureHandlerEvent={[Function]}
+  onGestureHandlerStateChange={[Function]}
+>
+  <View>
+    <RCTScrollView
+      collapsable={false}
+      onGestureHandlerEvent={[Function]}
+      onGestureHandlerStateChange={[Function]}
+    >
+      <View>
+        <View>
+          <Text
+            style={
+              Object {
+                "color": "black",
+                "fontSize": 20,
+                "marginLeft": 100,
+                "textAlign": "left",
+              }
+            }
+          >
+            Barry
+            's Details:
+          </Text>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "borderColor": "black",
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "margin": 10,
+                "padding": 4,
+                "width": undefined,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "grey",
+                    "fontSize": 12,
+                    "width": 80,
+                  }
+                }
+              >
+                First Name: 
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                defaultValue="Barry"
+                onChangeText={[Function]}
+                rejectResponderTermination={true}
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "borderRadius": 14,
+                    "fontSize": 14,
+                    "height": 30,
+                    "width": 85,
+                  }
+                }
+                underlineColorAndroid="transparent"
+              />
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "grey",
+                    "fontSize": 12,
+                    "width": 80,
+                  }
+                }
+              >
+                Surname: 
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                defaultValue="Manilow"
+                onChangeText={[Function]}
+                rejectResponderTermination={true}
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "borderRadius": 14,
+                    "fontSize": 14,
+                    "height": 30,
+                    "width": 85,
+                  }
+                }
+                underlineColorAndroid="transparent"
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "borderColor": "black",
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "margin": 10,
+                "padding": 4,
+                "width": undefined,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "grey",
+                    "fontSize": 12,
+                    "width": 80,
+                  }
+                }
+              >
+                Gender: 
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                defaultValue="Female"
+                onChangeText={[Function]}
+                rejectResponderTermination={true}
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "borderRadius": 14,
+                    "fontSize": 14,
+                    "height": 30,
+                    "width": 85,
+                  }
+                }
+                underlineColorAndroid="transparent"
+              />
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "grey",
+                    "fontSize": 12,
+                    "width": 80,
+                  }
+                }
+              >
+                Postcode: 
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                defaultValue="HD87 2OC"
+                onChangeText={[Function]}
+                rejectResponderTermination={true}
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "borderRadius": 14,
+                    "fontSize": 14,
+                    "height": 30,
+                    "width": 85,
+                  }
+                }
+                underlineColorAndroid="transparent"
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "borderColor": "black",
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "margin": 10,
+                "padding": 4,
+                "width": undefined,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "grey",
+                    "fontSize": 12,
+                    "width": 80,
+                  }
+                }
+              >
+                Email: 
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                defaultValue="neal19@berge.com"
+                onChangeText={[Function]}
+                rejectResponderTermination={true}
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "borderRadius": 14,
+                    "fontSize": 12,
+                    "height": 30,
+                    "padding": 8,
+                    "width": 150,
+                  }
+                }
+                underlineColorAndroid="transparent"
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "borderColor": "black",
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "margin": 10,
+                "padding": 4,
+                "width": undefined,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "grey",
+                    "fontSize": 12,
+                    "width": 80,
+                  }
+                }
+              >
+                Date of Birth: 
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                defaultValue="25/10/1989"
+                onChangeText={[Function]}
+                rejectResponderTermination={true}
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "borderRadius": 14,
+                    "fontSize": 12,
+                    "height": 30,
+                    "padding": 8,
+                    "width": 150,
+                  }
+                }
+                underlineColorAndroid="transparent"
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "borderColor": "black",
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "margin": 10,
+                "padding": 4,
+                "width": undefined,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "grey",
+                    "fontSize": 12,
+                    "width": 80,
+                  }
+                }
+              >
+                Address: 
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                defaultValue="9755 Mill Road"
+                onChangeText={[Function]}
+                rejectResponderTermination={true}
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "borderRadius": 14,
+                    "fontSize": 12,
+                    "height": 30,
+                    "padding": 8,
+                    "width": 150,
+                  }
+                }
+                underlineColorAndroid="transparent"
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "borderColor": "black",
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "margin": 10,
+                "padding": 4,
+                "width": undefined,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "grey",
+                    "fontSize": 12,
+                    "width": 80,
+                  }
+                }
+              >
+                City: 
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                defaultValue="HUDDERSFIELD"
+                onChangeText={[Function]}
+                placeholderTextColor="black"
+                rejectResponderTermination={true}
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "borderRadius": 14,
+                    "fontSize": 12,
+                    "height": 30,
+                    "padding": 8,
+                    "width": 150,
+                  }
+                }
+                underlineColorAndroid="transparent"
+              />
+            </View>
+          </View>
+          <View>
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "white",
+                  "borderColor": "black",
+                  "borderWidth": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "margin": 10,
+                  "padding": 4,
+                  "width": undefined,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "flex": 4,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "grey",
+                      "fontSize": 12,
+                      "width": 80,
+                    }
+                  }
+                >
+                  Seizure Type(s): 
+                </Text>
+              </View>
+              <View
+                style={
+                  Object {
+                    "flex": 4,
+                  }
+                }
+              >
+                <TextInput
+                  allowFontScaling={true}
+                  defaultValue="absence seizure"
+                  onChangeText={[Function]}
+                  rejectResponderTermination={true}
+                  style={
+                    Object {
+                      "backgroundColor": "white",
+                      "borderRadius": 14,
+                      "fontSize": 12,
+                      "height": 60,
+                      "padding": 8,
+                      "width": 150,
+                    }
+                  }
+                  underlineColorAndroid="transparent"
+                />
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "borderColor": "black",
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "margin": 10,
+                "padding": 4,
+                "width": undefined,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "grey",
+                    "fontSize": 12,
+                    "width": 80,
+                  }
+                }
+              >
+                Years Suffered: 
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                defaultValue="4"
+                onChangeText={[Function]}
+                rejectResponderTermination={true}
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "borderRadius": 14,
+                    "fontSize": 14,
+                    "height": 30,
+                    "width": 85,
+                  }
+                }
+                underlineColorAndroid="transparent"
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "borderColor": "black",
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "margin": 10,
+                "padding": 4,
+                "width": undefined,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "grey",
+                    "fontSize": 12,
+                    "width": 80,
+                  }
+                }
+              >
+                Seizure Freq: 
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                defaultValue="1"
+                onChangeText={[Function]}
+                rejectResponderTermination={true}
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "borderRadius": 14,
+                    "fontSize": 14,
+                    "height": 30,
+                    "width": 85,
+                  }
+                }
+                underlineColorAndroid="transparent"
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "borderColor": "black",
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "margin": 10,
+                "padding": 4,
+                "width": undefined,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "grey",
+                    "fontSize": 12,
+                    "width": 80,
+                  }
+                }
+              >
+                Seizure Trigger(s) 
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                defaultValue="lack of sleep, caffeine"
+                onChangeText={[Function]}
+                rejectResponderTermination={true}
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "borderRadius": 14,
+                    "fontSize": 12,
+                    "height": 60,
+                    "padding": 8,
+                    "width": 150,
+                  }
+                }
+                underlineColorAndroid="transparent"
+              />
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "borderColor": "black",
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "margin": 10,
+                "padding": 4,
+                "width": undefined,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "grey",
+                    "fontSize": 12,
+                    "width": 80,
+                  }
+                }
+              >
+                Mental Health issue(s)
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 4,
+                }
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                defaultValue="Anxiety"
+                onChangeText={[Function]}
+                rejectResponderTermination={true}
+                style={
+                  Object {
+                    "backgroundColor": "white",
+                    "borderRadius": 14,
+                    "fontSize": 12,
+                    "height": 60,
+                    "padding": 8,
+                    "width": 150,
+                  }
+                }
+                underlineColorAndroid="transparent"
+              />
+            </View>
+          </View>
+        </View>
+        <View
+          accessibilityRole="button"
+          accessibilityState={Object {}}
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {},
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#007AFF",
+                    "fontSize": 18,
+                    "margin": 8,
+                    "textAlign": "center",
+                  },
+                ]
+              }
+            >
+              Save Changes
+            </Text>
+          </View>
+        </View>
+        <View
+          accessibilityRole="button"
+          accessibilityState={Object {}}
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {},
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#007AFF",
+                    "fontSize": 18,
+                    "margin": 8,
+                    "textAlign": "center",
+                  },
+                ]
+              }
+            >
+              Remove Patient
+            </Text>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</RCTScrollView>
+`;

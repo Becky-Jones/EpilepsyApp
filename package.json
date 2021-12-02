@@ -5,12 +5,28 @@
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "build": "tsc --watch & nodemon -w dist/js/App.js",
-    "start": "concurrently \"tsc -w\" \"nodemon dist/js/App.js\" \"expo start\""
+    "start": "concurrently \"tsc -w\" \"nodemon dist/js/App.js\" \"expo start\"",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/coverage/**",
+      "!**/node_modules/**",
+      "!**/babel.config.js",
+      "!**/jest.setup.js"
+    ]
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "^3.5.2",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "@testing-library/react-native": "^8.0.0",
     "@unimodules/core": "^1.0.0",
     "chart.js": "^3.6.0",
     "cors": "^2.8.5",
@@ -56,7 +72,9 @@
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
     "concurrently": "^6.3.0",
-    "nodemon": "^2.0.15"
+    "jest-expo": "^43.0.1",
+    "nodemon": "^2.0.15",
+    "react-test-renderer": "^17.0.2"
   },
   "private": true
 }
