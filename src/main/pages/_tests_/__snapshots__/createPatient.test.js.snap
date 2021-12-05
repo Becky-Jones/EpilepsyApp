@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<createPatient /> renders correctly 1`] = `
+<createPatient
+  navigation={[MockFunction]}
+  route={
+    Object {
+      "Movies": "",
+      "Patient": "",
+      "Patients": "",
+      "User": Patient {
+        "Address": Address {
+          "address": "5 testing lane",
+          "city": "liverpool",
+          "postcode": "TR6 0GH",
+        },
+        "dob": "04-08-1998",
+        "email": "test@gmail.com",
+        "firstName": "Bob",
+        "gender": "male",
+        "password": "password",
+        "practitionerId": "12345678",
+        "seizureDetails": SeizureDetails {
+          "MHIssues": Array [
+            "Anxiety",
+          ],
+          "seizureFreq": "4",
+          "seizureTriggers": Array [
+            "Flashing lights",
+          ],
+          "seizureTypes": Array [
+            "Absense Seizure",
+          ],
+          "yearsSuffered": "1",
+        },
+        "surname": "Bobby",
+        "userType": "Patient",
+        "user_id": "TESTId",
+      },
+    }
+  }
+/>
+`;
