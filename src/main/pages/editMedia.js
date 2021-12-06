@@ -154,7 +154,7 @@ export default function EditMediaDetails({ navigation, route }) {
     newMovie.setLength(mediaLength);
     newMovie.setWarnings(warnings);
     var url = "http://192.168.0.7:4000/edit-movie/" + newMovie.getId();
-    console.log(url);
+    console.log(url) ;
 
     console.log(
       "Adding " +
@@ -178,8 +178,9 @@ export default function EditMediaDetails({ navigation, route }) {
       },
       body: JSON.stringify(json), 
     })
-      .then((response) => { 
+      .then((response) => {  
         console.log("Movie updated successfully");
+        alert("Movie updated successfully");
         navigation.navigate("All Media", {User: user, Movies: movies, Patients: analyticsInfo});
       })
       .catch((error) => {

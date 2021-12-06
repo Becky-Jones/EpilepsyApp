@@ -15,23 +15,6 @@ import AddTriggersItem from "../components/AddTriggersItem";
 import DropDownPicker from "react-native-dropdown-picker";
 import displayNav from "../components/NavBar";
 
-inputsValid = () => {
-  if (S_Password != S_CPassword) {
-    // Error, passwords don't match
-    alert("Validation Error - Passwords don't match!");
-    return false;
-  }
-
-  if (format.test(first_name) || format.test(surname)) {
-    // Error, name can't contain special character
-    alert(
-      "Validation Error - First and Surname can't contain special characters!"
-    );
-    return false;
-  }
-  return true;
-};
-
 export default function createPatient({ route, navigation }) {
   const params = route.params;
   const user = params.User;
@@ -92,6 +75,23 @@ export default function createPatient({ route, navigation }) {
   const [S_MonthlyFreq, setMonthlyFreq] = useState("");
   const [S_YearsSuffered, setYearsSuffered] = useState("");
 
+  inputsValid = () => {
+    if (S_Password != S_CPassword) {
+      // Error, passwords don't match
+      alert("Validation Error - Passwords don't match!");
+      return false;
+    }
+  
+    if (format.test(S_FName) || format.test(S_LName)) {
+      // Error, name can't contain special character
+      alert(
+        "Validation Error - First and Surname can't contain special characters!"
+      );
+      return false;
+    }
+    return true;
+  };
+  
   const InsertData = () => {
     const array = [];
     const MHArray = [];
@@ -106,7 +106,7 @@ export default function createPatient({ route, navigation }) {
       triggersArray.push(triggersList[i].trigger);
     }
 
-    if (inputsValid) {
+    if (inputsValid()) {
       fetch("http://192.168.0.7:4000/add-user", {
         method: "POST",
         headers: {

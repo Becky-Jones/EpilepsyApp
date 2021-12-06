@@ -14,6 +14,9 @@
 - MongoDB for VSCode
 - React Native Tools
 
+### Install required dependencies
+running 'npm install' should install all of the required dependencies, if there are some missing the below are the install commands.  
+
 ### Install react native app
 npm install -g react-native-app
 npm install -g yarn
@@ -37,6 +40,10 @@ npm install -g expo-cli
 npm install react-native-simple-table --save
 
 ### To run the app
+Run npm run-script build to build the dist folder which is needed for the backend routes to work with the front end. If this fails, comment out this line in the tsconfig.json file -   "extends": "expo/tsconfig.base"
+
+Then run npm run-script build and it should build the dist folder successfully. To run the tests, run 'npm test' - this will run the jest task and run the unit tests.
+
 Run npm start to start both the backend server and the frontend on expo - you might have to run it from the cmd window but it must be located in the app (i.e. EpilepsyApp).
 
 ### To get it on your phone

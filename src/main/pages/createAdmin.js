@@ -6,23 +6,6 @@ const commonstyles = require("./stylesheets/styles");
 var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 import displayNav from "../components/NavBar";
 
-inputsValid = () => {
-  if (S_Password != S_CPassword) {
-    // Error, passwords don't match
-    alert("Validation Error - Passwords don't match!");
-    return false;
-  }
-
-  if (format.test(first_name) || format.test(surname)) {
-    // Error, name can't contain special character
-    alert(
-      "Validation Error - First and Surname can't contain special characters!"
-    );
-    return false;
-  }
-  return true;
-};
-
 export default function createAdmin({ navigation, route }) {
   const params = route.params;
   const user = params.User;
@@ -40,8 +23,25 @@ export default function createAdmin({ navigation, route }) {
   const [S_Address, setAddress] = useState("");
   const [S_Postcode, setPostcode] = useState("");
 
+  inputsValid = () => {
+    if (S_Password != S_CPassword) {
+      // Error, passwords don't match
+      alert("Validation Error - Passwords don't match!");
+      return false;
+    }
+
+    if (format.test(S_FName) || format.test(S_LName)) {
+      // Error, name can't contain special character
+      alert(
+        "Validation Error - First and Surname can't contain special characters!"
+      );
+      return false;
+    }
+    return true;
+  };
+
   const InsertData = () => {
-    if (inputsValid) {
+    if (inputsValid()) {
       fetch("http://192.168.0.7:4000/add-user", {
         method: "POST",
         headers: {
@@ -64,7 +64,11 @@ export default function createAdmin({ navigation, route }) {
         .then((response) => {
           console.log("Admin created successfully");
           alert("Admin created Successfully");
-          navigation.navigate("Home", {User: user, Movies: movies, Patients: analyticsInfo});
+          navigation.navigate("Home", {
+            User: user,
+            Movies: movies,
+            Patients: analyticsInfo,
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -73,7 +77,7 @@ export default function createAdmin({ navigation, route }) {
   };
   return (
     <ScrollView>
-            {displayNav(navigation, user, movies, analyticsInfo)}
+      {displayNav(navigation, user, movies, analyticsInfo)}
       <Text style={commonstyles.text}>Practitioner Details:</Text>
       <View style={commonstyles.inlineInput}>
         <View style={{ flex: 4 }}>
